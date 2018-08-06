@@ -18,4 +18,6 @@ void		wrong_arg(t_flags *flags, t_ls *ls, char ch)
 	ft_printf("usage: ./ft_ls [-%s] [file ...]\n", FLAGS);
 	free(flags);
 	free(ls);
+//	system("leaks ft_ls > leaks.out");
+	exit(-1);
 }

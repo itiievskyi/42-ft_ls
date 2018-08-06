@@ -23,5 +23,6 @@ int		main(int argc, char **argv)
 		init_struct(flags, ls);
 		check_args(argc, argv, flags, ls);
 	}
+//	system("leaks ft_ls > leaks.out");
 	return (0);
 }
