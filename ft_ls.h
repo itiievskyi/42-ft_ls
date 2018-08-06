@@ -26,11 +26,12 @@ typedef struct		s_flags
 
 typedef struct		s_ls
 {
-	int				dests;
+	int				files;
 	int				flags;
+	int				*argc;
 }					t_ls;
 
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);
-void				init_struct(t_flags *flags, t_ls *ls);
+void				init_struct(t_flags *flags, t_ls *ls, int size);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
 #endif

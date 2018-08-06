@@ -20,7 +20,7 @@ int		main(int argc, char **argv)
 	if ((flags = (t_flags*)malloc(sizeof(t_flags))) &&
 		(ls = (t_ls*)malloc(sizeof(t_ls))))
 	{
-		init_struct(flags, ls);
+		init_struct(flags, ls, argc);
 		check_args(argc, argv, flags, ls);
 	}
 //	system("leaks ft_ls > leaks.out");

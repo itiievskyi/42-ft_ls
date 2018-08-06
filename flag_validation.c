@@ -12,8 +12,14 @@
 
 #include "ft_ls.h"
 
+static void double_def()
+{
+
+}
+
 static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 {
+	ls->flags++;
 	while (arg[++i] != '\0')
 	{
 		if (!ft_strchr(FLAGS, arg[i]))
@@ -38,7 +44,10 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 	arg = 0;
 	while (++arg < argc)
 	{
-		if (argv[arg][0] == '-' && !ft_strequ(argv[arg], "--"))
+		if (!ls->files && argv[arg][0] == '-' && !ft_strequ(argv[arg], "--")
+		&& argv[arg][0] != '\0')
 			parse_flags(flags, ls, argv[arg], 0);
+		else if (ft_strequ(argv[arg], "--"))
+			double_def();
 	}
 }
