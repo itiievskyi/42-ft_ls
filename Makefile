@@ -24,7 +24,10 @@ HEADER = ft_ls.h
 
 LIB = libft/libft.a
 
-SOURCES =	main.c\
+SOURCES =	main.c \
+			flag_validation.c \
+			quit.c \
+			utils.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

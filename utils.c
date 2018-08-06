@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/06 10:16:25 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/08/06 10:16:27 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/08/06 14:23:25 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/08/06 14:23:27 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		main(int argc, char **argv)
+void		init_struct(t_flags *flags, t_ls *ls)
 {
-	t_flags	*flags;
-	t_ls	*ls;
-
-	if ((flags = (t_flags*)malloc(sizeof(t_flags))) &&
-		(ls = (t_ls*)malloc(sizeof(t_ls))))
-	{
-		init_struct(flags, ls);
-		check_args(argc, argv, flags, ls);
-	}
-	return (0);
+	flags->longform = 0;
+	flags->dotfiles = 0;
+	flags->revsort = 0;
+	flags->recursive = 0;
+	flags->timesort = 0;
+	ls->dests = 0;
+	ls->flags = 0;
 }
