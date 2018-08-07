@@ -11,12 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-/*
-static void double_def()
-{
 
-}
-*/
 static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 {
 	ls->flags++;
