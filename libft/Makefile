@@ -100,6 +100,7 @@ SOURCES =	ft_atoi.c\
 			ft_words_count.c\
 			ft_count_in_array.c\
 			ft_isdigit_str.c\
+			ft_sort_strtab.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

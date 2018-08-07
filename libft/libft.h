@@ -72,6 +72,7 @@ void			ft_strclr(char *s);
 void			ft_striter(char *s, void (*f)(char *));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 void			*ft_memmove(void *dst, const void *src, size_t len);
+void			ft_sort_strtab(char **tab, char *type);
 size_t			ft_strlcat(char *dest, char *src, size_t dstsize);
 
 typedef struct	s_list
