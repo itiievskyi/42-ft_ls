@@ -17,6 +17,7 @@ int		main(int argc, char **argv)
 	t_flags	*flags;
 	t_ls	*ls;
 
+	ls = NULL;
 	if ((flags = (t_flags*)malloc(sizeof(t_flags))) &&
 		(ls = (t_ls*)malloc(sizeof(t_ls))))
 	{
@@ -24,5 +25,8 @@ int		main(int argc, char **argv)
 		check_args(argc, argv, flags, ls);
 	}
 //	system("leaks ft_ls > leaks.out");
+	int a = -1;
+	while (ls->objs[++a])
+		ft_printf("objs[%d] = %s\n", a, ls->objs[a]);
 	return (0);
 }

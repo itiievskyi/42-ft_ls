@@ -29,6 +29,7 @@ typedef struct		s_ls
 	int				files;
 	int				flags;
 	int				*argc;
+	char			**objs;
 }					t_ls;
 
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);

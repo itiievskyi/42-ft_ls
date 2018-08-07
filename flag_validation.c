@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
+/*
 static void double_def()
 {
 
 }
-
+*/
 static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 {
 	ls->flags++;
@@ -44,10 +44,24 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 	arg = 0;
 	while (++arg < argc)
 	{
-		if (!ls->files && argv[arg][0] == '-' && !ft_strequ(argv[arg], "--")
-		&& argv[arg][0] != '\0')
+		if (argv[arg] && ls->files == -1 && argv[arg][0] == '-'
+		&& !ft_strequ(argv[arg], "--") && argv[arg][0] != '\0')
 			parse_flags(flags, ls, argv[arg], 0);
-		else if (ft_strequ(argv[arg], "--"))
-			double_def();
+		else if (argv[arg] && ls->files == -1 && ft_strequ(argv[arg], "--")
+		&& !ls->objs)
+		{
+			ls->objs = (char**)malloc(sizeof(char*) * argc - arg);
+			ls->files = 0;
+		}
+		else if (argv[arg])
+		{
+			if (ls->files == -1 && !ls->objs)
+			{
+				ls->objs = (char**)malloc(sizeof(char*) * argc - arg + 1);
+				ls->files = 0;
+			}
+			ls->objs[ls->files++] = ft_strdup(argv[arg]);
+		}
 	}
+	ls->objs[ls->files] = NULL;
 }
