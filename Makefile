@@ -28,6 +28,7 @@ SOURCES =	main.c \
 			flag_validation.c \
 			quit.c \
 			utils.c \
+			handle_objects.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

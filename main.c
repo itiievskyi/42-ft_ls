@@ -24,6 +24,7 @@ int		main(int argc, char **argv)
 		init_struct(flags, ls, argc);
 		check_args(argc, argv, flags, ls);
 	}
+	read_objs(argc, argv, flags, ls);
 //	ft_sort_strtab(ls->objs, "asc");
 //	ft_sort_strtab(ls->objs, "desc");
 //	int a = -1;
