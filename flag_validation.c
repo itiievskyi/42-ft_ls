@@ -34,15 +34,7 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 
 static int	check_empty(t_ls *ls, int argc)
 {
-	if (argc == 1)
-	{
-		ls->objs = (char**)malloc(sizeof(char*) * 2);
-		ls->files = 1;
-		ls->objs[0] = ft_strdup(".");
-		ls->objs[1] = NULL;
-		return (1);
-	}
-	else if (ls->files == 0)
+	if (argc == 1 || ls->files == 0)
 	{
 		if (ls->objs)
 			free(ls->objs);
