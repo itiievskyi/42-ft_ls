@@ -32,6 +32,29 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 	}
 }
 
+static int	check_empty(t_ls *ls, int argc)
+{
+	if (argc == 1)
+	{
+		ls->objs = (char**)malloc(sizeof(char*) * 2);
+		ls->files = 1;
+		ls->objs[0] = ft_strdup(".");
+		ls->objs[1] = NULL;
+		return (1);
+	}
+	else if (ls->files == 0)
+	{
+		if (ls->objs)
+			free(ls->objs);
+		ls->objs = (char**)malloc(sizeof(char*) * 2);
+		ls->files = 1;
+		ls->objs[0] = ft_strdup(".");
+		ls->objs[1] = NULL;
+		return (1);
+	}
+	return (0);
+}
+
 void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 {
 	int		arg;
@@ -50,13 +73,11 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 		}
 		else if (argv[arg])
 		{
-			if (ls->files == -1 && !ls->objs)
-			{
+			if (ls->files == -1 && !ls->objs && (ls->files = 0) == 0)
 				ls->objs = (char**)malloc(sizeof(char*) * argc - arg + 1);
-				ls->files = 0;
-			}
 			ls->objs[ls->files++] = ft_strdup(argv[arg]);
 		}
 	}
-	ls->objs[ls->files] = NULL;
+	if (!check_empty(ls, argc))
+		ls->objs[ls->files] = NULL;
 }
