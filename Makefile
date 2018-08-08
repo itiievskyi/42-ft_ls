@@ -31,6 +31,8 @@ SOURCES =	main.c \
 			handle_objects.c \
 			display_columns.c \
 			t_file.c \
+			sort_list.c \
+			swaps.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

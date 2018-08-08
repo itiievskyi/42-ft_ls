@@ -1,0 +1,52 @@
+author
+diff
+diff_ls
+diff_my
+display_columns.c
+flag_validation.c
+ft_ls
+ft_ls.h
+handle_objects.c
+leaks.out
+libft
+main.c
+Makefile
+obj
+out
+quit.c
+sort_list.c
+t_file.c
+test
+utils.c
+##################### AFTER_SORTING ########################
+DEBUG PAIR: one = main.c,	two = Makefile
+DEBUG PAIR: one = libft,	two = Makefile
+DEBUG PAIR: one = leaks.out,	two = Makefile
+DEBUG PAIR: one = handle_objects.c,	two = Makefile
+DEBUG PAIR: one = ft_ls.h,	two = Makefile
+DEBUG PAIR: one = ft_ls,	two = Makefile
+DEBUG PAIR: one = flag_validation.c,	two = Makefile
+DEBUG PAIR: one = display_columns.c,	two = Makefile
+DEBUG PAIR: one = diff_my,	two = Makefile
+DEBUG PAIR: one = diff_ls,	two = Makefile
+DEBUG PAIR: one = diff,	two = Makefile
+DEBUG PAIR: one = author,	two = Makefile
+author
+diff
+diff_ls
+diff_my
+display_columns.c
+flag_validation.c
+ft_ls
+ft_ls.h
+handle_objects.c
+leaks.out
+libft
+main.c
+obj
+out
+quit.c
+sort_list.c
+t_file.c
+test
+utils.c

@@ -18,6 +18,8 @@ t_file		*t_file_new(char *name)
 
 	file = (t_file*)malloc(sizeof(t_file));
 	file->name = ft_strdup(name);
+	file->next = NULL;
+	file->prev = NULL;
 	stat(name, &file->stat);
 	return (file);
 }
@@ -32,6 +34,7 @@ int			t_file_pushback(t_file **begin, char *name)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = t_file_new(name);
+		temp->next->prev = temp;
 	}
 	else if (name)
 		*begin = t_file_new(name);
