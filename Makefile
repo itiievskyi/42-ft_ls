@@ -29,6 +29,8 @@ SOURCES =	main.c \
 			quit.c \
 			utils.c \
 			handle_objects.c \
+			display_columns.c \
+			t_file.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

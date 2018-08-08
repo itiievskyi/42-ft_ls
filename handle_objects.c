@@ -12,14 +12,33 @@
 
 #include "ft_ls.h"
 
-void		read_objs(int argc, char **argv, t_flags *flags, t_ls *ls)
+void		create_list(t_flags *flags, t_ls *ls, DIR *dir)
+{
+	struct dirent	*sd;
+	t_file			*file;
+
+	file = NULL;
+	while ((sd = readdir(dir)) != NULL)
+	{
+		if (sd->d_name[0] != '.' || (sd->d_name[0] == '.' && flags->dotfiles))
+			t_file_pushback(&file, sd->d_name);
+	}
+	if (flags && ls) {}
+
+	while (file) {
+		ft_printf("%d\t", (file->stat).st_mode);
+		ft_printf("%s\t", ctime(&(file->stat).st_mtime));
+		ft_printf("%s\n", file->name);
+		file = file->next;
+	}
+}
+
+void		read_objs(t_flags *flags, t_ls *ls)
 {
 	DIR				*dir;
-	struct dirent	*sd;
 	int				i;
 
 	i = -1;
-	if (argv && argc && flags) {}
 	if (flags->revsort == 0)
 		ft_sort_strtab(ls->objs, "asc");
 	else if (flags->revsort == 1)
@@ -29,12 +48,7 @@ void		read_objs(int argc, char **argv, t_flags *flags, t_ls *ls)
 		dir = opendir(ls->objs[i]);
 		if (dir == NULL)
 			ft_printf("%s\n", strerror(errno));
-		else
-		{
-			while ((sd = readdir(dir)) != NULL)
-			{
-				ft_printf("%s\n", sd->d_name);
-			}
-		}
+		else if (!flags->longform)
+			create_list(flags, ls, dir);
 	}
 }

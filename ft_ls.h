@@ -16,6 +16,8 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <errno.h>
+# include <sys/stat.h>
+# include <time.h>
 # define FLAGS "Ralrt"
 
 typedef struct		s_flags
@@ -35,8 +37,20 @@ typedef struct		s_ls
 	char			**objs;
 }					t_ls;
 
+typedef struct		s_file
+{
+	char			*name;
+	char			*time_str;
+	int				time_int;
+	struct stat		stat;
+	struct s_file	*next;
+}					t_file;
+
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);
 void				init_struct(t_flags *flags, t_ls *ls, int size);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
-void				read_objs(int argc, char **argv, t_flags *flags, t_ls *ls);
+void				read_objs(t_flags *flags, t_ls *ls);
+void				create_list(t_flags *flags, t_ls *ls, DIR *dir);
+int					t_file_pushback(t_file **begin, char *name);
+t_file				*t_file_new(char *name);
 #endif
