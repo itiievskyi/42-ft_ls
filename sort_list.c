@@ -46,7 +46,6 @@ void		time_sort(t_file *file)
 	t_file	*temp;
 
 	temp = file;
-
 	while (temp && temp->next)
 	{
 		if (((temp->stat).st_mtime < (temp->next->stat).st_mtime))
@@ -59,26 +58,29 @@ void		time_sort(t_file *file)
 	}
 }
 
-void		sort_list(t_file *file, t_flags *flags)
+void		alpha_sort(t_file *file)
 {
 	t_file	*temp;
 
 	temp = file;
+	while (temp && temp->next)
+	{
+		if (ft_strcmp(temp->name, temp->next->name) > 0)
+		{
+			swap_t_file(temp, temp->next);
+			temp = file;
+		}
+		else
+			temp = temp->next;
+	}
+}
+
+void		sort_list(t_file *file, t_flags *flags)
+{
 	if (flags->timesort == 1)
 		time_sort(file);
 	else
-	{
-		while (temp && temp->next)
-		{
-			if (ft_strcmp(temp->name, temp->next->name) > 0)
-			{
-				swap_t_file(temp, temp->next);
-				temp = file;
-			}
-			else
-				temp = temp->next;
-		}
-	}
+		alpha_sort(file);
 	if (flags->revsort == 1)
 		rev_sort(file, -1, 0);
 }

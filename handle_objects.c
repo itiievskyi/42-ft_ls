@@ -43,9 +43,12 @@ void		read_objs(t_flags *flags, t_ls *ls)
 		if (dir == NULL)
 			ft_printf("%s\n", strerror(errno));
 		cat = ft_strjoin(temp->path, temp->name);
+		if (dir && cat && (count_list_length(ls->objs) > 1 || ls->err))
+			ft_printf("%s:\n", cat);
 		file = create_list(flags, ls, dir, cat);
-//		if (!flags->longform)
-			display(ls, file);
+		print_list(ls, file, flags);
+		if (temp->next)
+			write(1, "\n", 1);
 		temp = temp->next;
 	}
 }

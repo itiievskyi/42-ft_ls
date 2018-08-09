@@ -53,7 +53,7 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 			if (!ls->objs && !ls->err && ft_strequ(argv[arg], "--"))
 				arg++;
 			if (argv[arg] && (opendir(argv[arg])) == NULL)
-				t_file_pushback(&(ls->err), argv[arg], "");
+				t_file_pushback(&(ls->err), argv[arg], strerror(errno));
 			else if (argv[arg])
 				t_file_pushback(&(ls->objs), argv[arg], "");
 		}

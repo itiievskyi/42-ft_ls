@@ -17,7 +17,8 @@ void		display(t_ls *ls, t_file *file)
 	t_file			*file1;
 
 	file1 = file;
-	while (file1 && ls) {
+	while (file1 && ls)
+	{
 //		ft_printf("%d\t", (file1->stat).st_mode);
 		ft_printf("%s\n", file1->name);
 //		ft_printf("%s\t", file1->path);
@@ -25,4 +26,13 @@ void		display(t_ls *ls, t_file *file)
 //		ft_printf("%s", ctime(&(file1->stat).st_mtime));
 		file1 = file1->next;
 	}
+}
+
+void		print_list(t_ls *ls, t_file *file, t_flags *flags)
+{
+	int				length;
+
+	length = count_list_length(ls->objs);
+	if (!flags->longform)
+		display(ls, file);
 }

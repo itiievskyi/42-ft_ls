@@ -19,7 +19,7 @@
 # include <sys/stat.h>
 # include <time.h>
 # include <stdio.h>
-# define FLAGS "Ralrt"
+# define FLAGS "1Ralrt"
 
 typedef struct		s_file
 {
@@ -59,6 +59,9 @@ t_file				*t_file_new(char *name, char *cat);
 void				sort_list(t_file *file, t_flags *flags);
 void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
+void				print_list(t_ls *ls, t_file *file, t_flags *flags);
 void				display(t_ls *ls, t_file *file);
 int					count_list_length(t_file *file);
+void				print_errors(t_ls *ls);
+void				alpha_sort(t_file *file);
 #endif
