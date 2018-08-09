@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void		create_list(t_flags *flags, t_ls *ls, DIR *dir)
+t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir)
 {
 	struct dirent	*sd;
 	t_file			*file;
@@ -23,35 +23,16 @@ void		create_list(t_flags *flags, t_ls *ls, DIR *dir)
 		if (sd->d_name[0] != '.' || (sd->d_name[0] == '.' && flags->dotfiles))
 			t_file_pushback(&file, sd->d_name);
 	}
-/*	ft_printf("##################### BEFORE_SORTING ########################\n");
-
-	t_file			*file2;
-	file2 = file;
-	while (file2) {
-		ft_printf("%d\t", (file2->stat).st_mode);
-		ft_printf("%s\t", file2->name);
-		ft_printf("%s", ctime(&(file2->stat).st_mtime));
-		file2 = file2->next;
-	}
-	ft_printf("##################### AFTER_SORTING ########################\n");
-*/
 	if (ls->files > 0)
 		sort_list(file, flags);
-
-	t_file			*file1;
-	file1 = file;
-	while (file1) {
-		ft_printf("%d\t", (file1->stat).st_mode);
-		ft_printf("%s\t", file1->name);
-		ft_printf("%s", ctime(&(file1->stat).st_mtime));
-		file1 = file1->next;
-	}
+	return (file);
 }
 
 void		read_objs(t_flags *flags, t_ls *ls)
 {
 	DIR				*dir;
 	int				i;
+	t_file			*file;
 
 	i = -1;
 	if (flags->revsort == 0)
@@ -63,7 +44,8 @@ void		read_objs(t_flags *flags, t_ls *ls)
 		dir = opendir(ls->objs[i]);
 		if (dir == NULL)
 			ft_printf("%s\n", strerror(errno));
-		else if (!flags->longform)
-			create_list(flags, ls, dir);
+		file = create_list(flags, ls, dir);
+		if (!flags->longform)
+			display(ls, file);
 	}
 }

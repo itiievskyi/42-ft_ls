@@ -50,10 +50,11 @@ void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);
 void				init_struct(t_flags *flags, t_ls *ls, int size);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
 void				read_objs(t_flags *flags, t_ls *ls);
-void				create_list(t_flags *flags, t_ls *ls, DIR *dir);
+t_file				*create_list(t_flags *flags, t_ls *ls, DIR *dir);
 int					t_file_pushback(t_file **begin, char *name);
 t_file				*t_file_new(char *name);
 void				sort_list(t_file *file, t_flags *flags);
 void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
+void				display(t_ls *ls, t_file *file);
 #endif
