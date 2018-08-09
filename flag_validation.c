@@ -32,19 +32,10 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 	}
 }
 
-static int	check_empty(t_ls *ls, int argc)
+static void	check_empty(t_ls *ls)
 {
-	if (argc == 1 || ls->files == 0 || ls->files == -1)
-	{
-		if (ls->objs)
-			free(ls->objs);
-		ls->objs = (char**)malloc(sizeof(char*) * 2);
-		ls->files = 1;
-		ls->objs[0] = ft_strdup(".");
-		ls->objs[1] = NULL;
-		return (1);
-	}
-	return (0);
+	if (!ls->objs && !ls->err)
+		t_file_pushback(&(ls->objs), ".", "");
 }
 
 void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
@@ -54,22 +45,18 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 	arg = 0;
 	while (++arg < argc)
 	{
-		if (argv[arg] && ls->files == -1 && argv[arg][0] == '-'
+		if (argv[arg] && !ls->objs && !ls->err && argv[arg][0] == '-'
 		&& !ft_strequ(argv[arg], "--") && argv[arg][0] != '\0')
 			parse_flags(flags, ls, argv[arg], 0);
-		else if (argv[arg] && ls->files == -1 && ft_strequ(argv[arg], "--")
-		&& !ls->objs)
-		{
-			ls->objs = (char**)malloc(sizeof(char*) * argc - arg);
-			ls->files = 0;
-		}
 		else if (argv[arg])
 		{
-			if (ls->files == -1 && !ls->objs && (ls->files = 0) == 0)
-				ls->objs = (char**)malloc(sizeof(char*) * argc - arg + 1);
-			ls->objs[ls->files++] = ft_strdup(argv[arg]);
+			if (!ls->objs && !ls->err && ft_strequ(argv[arg], "--"))
+				arg++;
+			if (argv[arg] && (opendir(argv[arg])) == NULL)
+				t_file_pushback(&(ls->err), argv[arg], "");
+			else if (argv[arg])
+				t_file_pushback(&(ls->objs), argv[arg], "");
 		}
 	}
-	if (!check_empty(ls, argc))
-		ls->objs[ls->files] = NULL;
+	check_empty(ls);
 }

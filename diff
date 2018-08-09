@@ -2,6 +2,7 @@
 
 make
 
-ls $@ > diff_ls
-./ft_ls $@ > diff_my
-vim -d diff_ls diff_my
+ls $@ > /tmp/diff_ls
+./ft_ls $@ > /tmp/diff_my
+vim -d /tmp/diff_ls /tmp/diff_my
+rm /tmp/diff_ls /tmp/diff_my

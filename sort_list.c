@@ -15,6 +15,8 @@
 static void	swap_t_file(t_file *one, t_file *two)
 {
 	ft_str_swap(&(one->name), &(two->name));
+	ft_str_swap(&(one->path), &(two->path));
+	ft_str_swap(&(one->full), &(two->full));
 	ft_stat_swap(&(one->stat), &(two->stat));
 }
 

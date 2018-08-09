@@ -23,4 +23,5 @@ void		init_struct(t_flags *flags, t_ls *ls, int size)
 	ls->flags = 0;
 	ls->argc = (int*)malloc(sizeof(int) * size);
 	ls->objs = NULL;
+	ls->err = NULL;
 }

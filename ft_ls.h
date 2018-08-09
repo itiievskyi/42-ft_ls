@@ -21,6 +21,16 @@
 # include <stdio.h>
 # define FLAGS "Ralrt"
 
+typedef struct		s_file
+{
+	char			*name;
+	char			*path;
+	char			*full;
+	struct stat		stat;
+	struct s_file	*next;
+	struct s_file	*prev;
+}					t_file;
+
 typedef struct		s_flags
 {
 	int				longform;
@@ -35,24 +45,17 @@ typedef struct		s_ls
 	int				files;
 	int				flags;
 	int				*argc;
-	char			**objs;
+	struct s_file	*objs;
+	struct s_file	*err;
 }					t_ls;
-
-typedef struct		s_file
-{
-	char			*name;
-	struct stat		stat;
-	struct s_file	*next;
-	struct s_file	*prev;
-}					t_file;
 
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);
 void				init_struct(t_flags *flags, t_ls *ls, int size);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
 void				read_objs(t_flags *flags, t_ls *ls);
-t_file				*create_list(t_flags *flags, t_ls *ls, DIR *dir);
-int					t_file_pushback(t_file **begin, char *name);
-t_file				*t_file_new(char *name);
+t_file				*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat);
+int					t_file_pushback(t_file **begin, char *name, char *cat);
+t_file				*t_file_new(char *name, char *cat);
 void				sort_list(t_file *file, t_flags *flags);
 void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);

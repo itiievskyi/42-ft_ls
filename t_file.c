@@ -27,19 +27,29 @@ int			count_list_length(t_file *file)
 	return (length);
 }
 
-t_file		*t_file_new(char *name)
+t_file		*t_file_new(char *name, char *cat)
 {
 	t_file	*file;
+	char	*temp;
 
 	file = (t_file*)malloc(sizeof(t_file));
 	file->name = ft_strdup(name);
+	file->path = ft_strdup(cat);
+	if (cat && cat[0] != '\0' && !ft_strequ(cat, "."))
+	{
+		temp = ft_strjoin(cat, "/");
+		file->full = ft_strjoin(temp, name);
+		free(temp);
+	}
+	else if (cat)
+		file->full = ft_strjoin("", name);
 	file->next = NULL;
 	file->prev = NULL;
-	stat(name, &file->stat);
+	stat(file->full, &file->stat);
 	return (file);
 }
 
-int			t_file_pushback(t_file **begin, char *name)
+int			t_file_pushback(t_file **begin, char *name, char *cat)
 {
 	t_file *temp;
 
@@ -48,11 +58,11 @@ int			t_file_pushback(t_file **begin, char *name)
 	{
 		while (temp->next)
 			temp = temp->next;
-		temp->next = t_file_new(name);
+		temp->next = t_file_new(name, cat);
 		temp->next->prev = temp;
 	}
 	else if (name)
-		*begin = t_file_new(name);
+		*begin = t_file_new(name, cat);
 	else
 		return (0);
 	return (1);
