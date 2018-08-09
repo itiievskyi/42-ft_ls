@@ -57,4 +57,5 @@ void				sort_list(t_file *file, t_flags *flags);
 void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
 void				display(t_ls *ls, t_file *file);
+int					count_list_length(t_file *file);
 #endif

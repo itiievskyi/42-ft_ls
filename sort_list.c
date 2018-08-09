@@ -18,21 +18,24 @@ static void	swap_t_file(t_file *one, t_file *two)
 	ft_stat_swap(&(one->stat), &(two->stat));
 }
 
-void		rev_sort(t_file *file)
+void		rev_sort(t_file *file, int i, int j)
 {
-	t_file	*temp;
+	t_file	*a;
+	t_file	*b;
+	int		len;
 
-	temp = file;
-
-	while (temp && temp->next)
+	len = count_list_length(file);
+	while (++i < len / 2)
 	{
-		if (ft_strcmp(temp->name, temp->next->name) < 0)
-		{
-			swap_t_file(temp, temp->next);
-			temp = file;
-		}
-		else
-			temp = temp->next;
+		j = 0;
+		a = file;
+		b = file;
+		while (j++ < i)
+			a = a->next;
+		j = 0;
+		while (j++ < len - i - 1)
+			b = b->next;
+		swap_t_file(a, b);
 	}
 }
 
@@ -59,9 +62,7 @@ void		sort_list(t_file *file, t_flags *flags)
 	t_file	*temp;
 
 	temp = file;
-	if (flags->revsort == 1)
-		rev_sort(file);
-	else if (flags->timesort == 1)
+	if (flags->timesort == 1)
 		time_sort(file);
 	else
 	{
@@ -76,4 +77,6 @@ void		sort_list(t_file *file, t_flags *flags)
 				temp = temp->next;
 		}
 	}
+	if (flags->revsort == 1)
+		rev_sort(file, -1, 0);
 }

@@ -23,15 +23,12 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 			flags->longform = 1;
 		else if (arg[i] == 'a')
 			flags->dotfiles = 1;
-		else if (arg[i] == 'r' && flags->timesort == 0)
+		else if (arg[i] == 'r')
 			flags->revsort = 1;
 		else if (arg[i] == 'R')
 			flags->recursive = 1;
 		else if (arg[i] == 't')
-		{
-			flags->revsort = 0;
 			flags->timesort = 1;
-		}
 	}
 }
 

@@ -12,6 +12,21 @@
 
 #include "ft_ls.h"
 
+int			count_list_length(t_file *file)
+{
+	t_file		*temp;
+	int			length;
+
+	temp = file;
+	length = 0;
+	while (temp)
+	{
+		length++;
+		temp = temp->next;
+	}
+	return (length);
+}
+
 t_file		*t_file_new(char *name)
 {
 	t_file	*file;
