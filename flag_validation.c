@@ -32,9 +32,12 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 	}
 }
 
-static void	check_empty(t_ls *ls)
+static void	finish_parsing(t_ls *ls, t_flags *flags)
 {
-	if (!ls->objs && !ls->err)
+	print_errors(ls);
+	if (ls->files)
+		print_list(ls, ls->files, flags);
+	if (!ls->objs && !ls->err && !ls->files)
 		t_file_pushback(&(ls->objs), ".", "");
 }
 
@@ -45,18 +48,21 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 	arg = 0;
 	while (++arg < argc)
 	{
-		if (argv[arg] && !ls->objs && !ls->err && argv[arg][0] == '-'
-		&& !ft_strequ(argv[arg], "--") && argv[arg][0] != '\0')
+		if (argv[arg] && !ls->objs && !ls->err && !ls->files &&
+		argv[arg][0] == '-' && !ft_strequ(argv[arg], "--"))
 			parse_flags(flags, ls, argv[arg], 0);
 		else if (argv[arg])
 		{
 			if (!ls->objs && !ls->err && ft_strequ(argv[arg], "--"))
 				arg++;
-			if (argv[arg] && (opendir(argv[arg])) == NULL)
+			if (argv[arg] && (opendir(argv[arg])) == NULL &&
+			ft_strequ(strerror(errno), "Not a directory"))
+				t_file_pushback(&(ls->files), argv[arg], "");
+			else if (argv[arg] && (opendir(argv[arg])) == NULL)
 				t_file_pushback(&(ls->err), argv[arg], strerror(errno));
 			else if (argv[arg])
 				t_file_pushback(&(ls->objs), argv[arg], "");
 		}
 	}
-	check_empty(ls);
+	finish_parsing(ls, flags);
 }

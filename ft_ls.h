@@ -42,11 +42,11 @@ typedef struct		s_flags
 
 typedef struct		s_ls
 {
-	int				files;
 	int				flags;
 	int				*argc;
 	struct s_file	*objs;
 	struct s_file	*err;
+	struct s_file	*files;
 }					t_ls;
 
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);

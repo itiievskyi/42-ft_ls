@@ -37,6 +37,7 @@ void		read_objs(t_flags *flags, t_ls *ls)
 
 	temp = ls->objs;
 	sort_list(ls->objs, flags);
+	sort_list(ls->files, flags);
 	while (temp)
 	{
 		dir = opendir(temp->name);
