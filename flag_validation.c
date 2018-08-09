@@ -36,7 +36,11 @@ static void	finish_parsing(t_ls *ls, t_flags *flags)
 {
 	print_errors(ls);
 	if (ls->files)
+	{
 		print_list(ls, ls->files, flags);
+		if (ls->objs)
+			write(1, "\n", 1);
+	}
 	if (!ls->objs && !ls->err && !ls->files)
 		t_file_pushback(&(ls->objs), ".", "");
 }
