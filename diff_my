@@ -1,18 +1,21 @@
-author
-diff
-diff_ls
-diff_my
-display_columns.c
-flag_validation.c
-ft_ls
-ft_ls.h
-handle_objects.c
-leaks.out
-libft
-main.c
-obj
-quit.c
-sort_list.c
-t_file.c
-test
-utils.c
+33188	diff_ls	Thu Aug  9 09:02:38 2018
+33188	diff_my	Thu Aug  9 09:02:38 2018
+33261	ft_ls	Thu Aug  9 08:56:14 2018
+16877	obj	Thu Aug  9 08:56:14 2018
+33188	sort_list.c	Thu Aug  9 08:56:12 2018
+33188	flag_validation.c	Thu Aug  9 08:50:45 2018
+16877	libft	Thu Aug  9 08:35:00 2018
+33188	ft_ls.h	Wed Aug  8 20:37:36 2018
+33188	handle_objects.c	Wed Aug  8 20:32:06 2018
+33188	swaps.c	Wed Aug  8 20:23:40 2018
+33188	Makefile	Wed Aug  8 20:23:07 2018
+33188	t_file.c	Wed Aug  8 20:03:11 2018
+33188	out	Wed Aug  8 19:52:12 2018
+33188	diff	Wed Aug  8 19:27:27 2018
+33188	display_columns.c	Wed Aug  8 17:35:13 2018
+33188	main.c	Wed Aug  8 16:26:08 2018
+16877	test	Wed Aug  8 14:12:28 2018
+33188	leaks.out	Tue Aug  7 18:07:29 2018
+33188	utils.c	Tue Aug  7 09:54:52 2018
+33188	quit.c	Mon Aug  6 16:03:25 2018
+33188	author	Thu Jun  7 09:45:09 2018

@@ -44,8 +44,7 @@ void		time_sort(t_file *file)
 
 	while (temp && temp->next)
 	{
-		printf("KJDFKHGHJKFLSDFDSFDS \n");
-		if (difftime((temp->stat).st_mtime, (temp->stat).st_mtime) < 0)
+		if (((temp->stat).st_mtime < (temp->next->stat).st_mtime))
 		{
 			swap_t_file(temp, temp->next);
 			temp = file;
