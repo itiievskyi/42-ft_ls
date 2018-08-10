@@ -53,6 +53,13 @@ void		time_sort(t_file *file)
 			swap_t_file(temp, temp->next);
 			temp = file;
 		}
+		else if (((temp->stat).st_mtime == (temp->next->stat).st_mtime) &&
+		((temp->stat).st_mtimespec.tv_nsec <
+		(temp->next->stat).st_mtimespec.tv_nsec))
+		{
+			swap_t_file(temp, temp->next);
+			temp = file;
+		}
 		else
 			temp = temp->next;
 	}

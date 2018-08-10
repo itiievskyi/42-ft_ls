@@ -16,13 +16,32 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 {
 	struct dirent	*sd;
 	t_file			*file;
+	t_file			*dirs;
+	t_file			*temp;
 
 	file = NULL;
 	while ((sd = readdir(dir)) != NULL)
 	{
 		if (sd->d_name[0] != '.' || (sd->d_name[0] == '.' && flags->dotfiles))
-			t_file_pushback(&file, sd->d_name, cat);
+		{
+			if ((opendir(sd->d_name)) == NULL &&
+			ft_strequ(strerror(errno), "Not a directory"))
+				t_file_pushback(&file, sd->d_name, cat);
+			else
+				t_file_pushback(&dirs, sd->d_name, cat);
+		}
 	}
+//	rev_sort(file, -1, 0);
+//	rev_sort(dirs, -1, 0);
+	temp = file;
+	if (file)
+	{
+		while (temp->next)
+			temp = temp->next;
+		temp->next = dirs;
+	}
+	else
+		file = dirs;
 	if (count_list_length(file) > 1 && ls)
 		sort_list(file, flags);
 	return (file);
@@ -37,7 +56,6 @@ void		read_objs(t_flags *flags, t_ls *ls)
 
 	temp = ls->objs;
 	sort_list(ls->objs, flags);
-	sort_list(ls->files, flags);
 	while (temp)
 	{
 		dir = opendir(temp->name);
