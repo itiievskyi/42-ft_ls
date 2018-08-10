@@ -53,17 +53,19 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 	arg = 0;
 	while (++arg < argc)
 	{
-		if (argv[arg] && !ls->objs && !ls->err && !ls->files &&
-		argv[arg][0] == '-' && !ft_strequ(argv[arg], "--"))
+		if (argv[arg] && !ls->objs && !ls->err && !ft_strequ(argv[arg], "--")
+		&& !ls->files && argv[arg][0] == '-' && !ft_strequ(argv[arg], "-"))
 			parse_flags(flags, ls, argv[arg], 0);
 		else if (argv[arg])
 		{
-			if (!ls->objs && !ls->err && ft_strequ(argv[arg], "--"))
+			if (!ls->objs && !ls->err && !ls->files &&
+			ft_strequ(argv[arg], "--"))
 				arg++;
 			if (argv[arg] && (opendir(argv[arg])) == NULL &&
 			ft_strequ(strerror(errno), "Not a directory"))
 				t_file_pushback(&(ls->files), argv[arg], "");
-			else if (argv[arg] && (opendir(argv[arg])) == NULL)
+			else if (argv[arg] && (opendir(argv[arg])) == NULL &&
+			ft_strequ(strerror(errno), "No such file or directory"))
 				t_file_pushback(&(ls->err), argv[arg], strerror(errno));
 			else if (argv[arg])
 				t_file_pushback(&(ls->objs), argv[arg], "");

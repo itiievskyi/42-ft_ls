@@ -63,6 +63,7 @@ void				print_list(t_ls *ls, t_file *file, t_flags *flags);
 void				display(t_ls *ls, t_file *file);
 int					count_list_length(t_file *file);
 void				print_errors(t_ls *ls);
+void				print_cat_error(char *cat, char *error);
 void				alpha_sort(t_file *file);
 void				rev_sort(t_file *file, int i, int j);
 #endif

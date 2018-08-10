@@ -57,14 +57,17 @@ void		read_objs(t_flags *flags, t_ls *ls)
 	sort_list(ls->objs, flags);
 	while (temp)
 	{
+		cat = ft_strjoin(temp->path, temp->name);
+		if (cat && (count_list_length(ls->objs) > 1 || ls->err))
+			ft_printf("%s:\n", cat);
 		dir = opendir(temp->name);
 		if (dir == NULL)
-			ft_printf("%s\n", strerror(errno));
-		cat = ft_strjoin(temp->path, temp->name);
-		if (dir && cat && (count_list_length(ls->objs) > 1 || ls->err))
-			ft_printf("%s:\n", cat);
-		file = create_list(flags, ls, dir, cat);
-		print_list(ls, file, flags);
+			print_cat_error(cat, strerror(errno));
+		else
+		{
+			file = create_list(flags, ls, dir, cat);
+			print_list(ls, file, flags);
+		}
 		if (temp->next)
 			write(1, "\n", 1);
 		temp = temp->next;

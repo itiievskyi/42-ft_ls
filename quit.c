@@ -14,8 +14,12 @@
 
 void		wrong_arg(t_flags *flags, t_ls *ls, char ch)
 {
-	ft_printf("ft_ls: illegal option -- %c\n", ch);
-	ft_printf("usage: ./ft_ls [-%s] [file ...]\n", FLAGS);
+	ft_putstr_fd("ft_ls: illegal option -- ", 2);
+	ft_putchar_fd(ch, 2);
+	ft_putchar_fd('\n', 2);
+	ft_putstr_fd("usage: ./ft_ls [-", 2);
+	ft_putstr_fd(FLAGS, 2);
+	ft_putstr_fd("] [file ...]\n", 2);
 	free(flags);
 	free(ls);
 //	system("leaks ft_ls > leaks.out");

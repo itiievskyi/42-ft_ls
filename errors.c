@@ -22,8 +22,23 @@ void		print_errors(t_ls *ls)
 	{
 		while (temp)
 		{
-			ft_printf("ft_ls: %s: %s\n", temp->name, temp->path);
+			ft_putstr_fd("ft_ls: ", 2);
+			ft_putstr_fd(temp->name, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(temp->path, 2);
+			ft_putstr_fd("\n", 2);
 			temp = temp->next;
 		}
 	}
+}
+
+void		print_cat_error(char *cat, char *error)
+{
+	ft_putstr_fd("ft_ls: ", 2);
+	if (cat)
+		ft_putstr_fd(cat, 2);
+	ft_putstr_fd(": ", 2);
+	if (error)
+		ft_putstr_fd(error, 2);
+	ft_putstr_fd("\n", 2);
 }
