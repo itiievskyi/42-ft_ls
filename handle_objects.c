@@ -20,6 +20,7 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 	t_file			*temp;
 
 	file = NULL;
+	dirs = NULL;
 	while ((sd = readdir(dir)) != NULL)
 	{
 		if (sd->d_name[0] != '.' || (sd->d_name[0] == '.' && flags->dotfiles))
@@ -40,7 +41,7 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 	}
 	else
 		file = dirs;
-	if (count_list_length(file) > 1 && ls)
+	if (file && count_list_length(file) > 1 && ls)
 		sort_list(file, flags);
 	return (file);
 }

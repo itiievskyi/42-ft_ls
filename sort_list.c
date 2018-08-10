@@ -48,12 +48,12 @@ void		time_sort(t_file *file)
 	temp = file;
 	while (temp && temp->next)
 	{
-		if (((temp->stat).st_mtime < (temp->next->stat).st_mtime))
+		if (((temp->stat).st_mtimespec.tv_sec < (temp->next->stat).st_mtimespec.tv_sec))
 		{
 			swap_t_file(temp, temp->next);
 			temp = file;
 		}
-		else if (((temp->stat).st_mtime == (temp->next->stat).st_mtime) &&
+		else if (((temp->stat).st_mtimespec.tv_sec == (temp->next->stat).st_mtimespec.tv_sec) &&
 		((temp->stat).st_mtimespec.tv_nsec <
 		(temp->next->stat).st_mtimespec.tv_nsec))
 		{
@@ -84,10 +84,9 @@ void		alpha_sort(t_file *file)
 
 void		sort_list(t_file *file, t_flags *flags)
 {
+	alpha_sort(file);
 	if (flags->timesort == 1)
 		time_sort(file);
-	else
-		alpha_sort(file);
 	if (flags->revsort == 1)
 		rev_sort(file, -1, 0);
 }
