@@ -45,7 +45,7 @@ t_file		*t_file_new(char *name, char *cat)
 		file->full = ft_strjoin("", name);
 	file->next = NULL;
 	file->prev = NULL;
-	stat(file->full, &file->stat);
+	lstat(file->full, &file->stat);
 	return (file);
 }
 
