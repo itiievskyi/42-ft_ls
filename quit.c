@@ -23,5 +23,5 @@ void		wrong_arg(t_flags *flags, t_ls *ls, char ch)
 	free(flags);
 	free(ls);
 //	system("leaks ft_ls > leaks.out");
-	exit(-1);
+	exit(1);
 }

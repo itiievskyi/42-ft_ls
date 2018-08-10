@@ -67,6 +67,7 @@ void		read_objs(t_flags *flags, t_ls *ls)
 		{
 			file = create_list(flags, ls, dir, cat);
 			print_list(ls, file, flags);
+			closedir(dir);
 		}
 		if (temp->next)
 			write(1, "\n", 1);
