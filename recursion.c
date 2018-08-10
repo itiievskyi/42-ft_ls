@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   recursion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/06 14:23:25 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/08/06 14:23:27 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/08/10 18:01:21 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/08/10 18:01:23 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		init_struct(t_flags *flags, t_ls *ls)
+void		recursion(t_ls *ls, t_flags *flags)
 {
-	flags->longform = 0;
-	flags->dotfiles = 0;
-	flags->revsort = 0;
-	flags->recursive = 0;
-	flags->timesort = 0;
-	ls->objs = NULL;
-	ls->files = NULL;
-	ls->err = NULL;
-	ls->path = NULL;
+	if (flags && ls) {}
+	DIR				*dir;
+	t_file			*temp;
+	t_file			*list;
+	char			*cat;
+	t_ls			*rec;
+
+	list =
+	rec = (t_ls*)malloc(sizeof(t_ls));
+	temp = ls->objs;
+	while (temp)
+	{
+		if ((dir = opendir(temp->name) )
+		temp = temp->next;
+	}
 }

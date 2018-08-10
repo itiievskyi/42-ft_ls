@@ -21,7 +21,7 @@ int		main(int argc, char **argv)
 	if ((flags = (t_flags*)malloc(sizeof(t_flags))) &&
 		(ls = (t_ls*)malloc(sizeof(t_ls))))
 	{
-		init_struct(flags, ls, argc);
+		init_struct(flags, ls);
 		check_args(argc, argv, flags, ls);
 	}
 	read_objs(flags, ls);

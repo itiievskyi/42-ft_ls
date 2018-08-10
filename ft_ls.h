@@ -42,15 +42,14 @@ typedef struct		s_flags
 
 typedef struct		s_ls
 {
-	int				flags;
-	int				*argc;
 	struct s_file	*objs;
 	struct s_file	*err;
 	struct s_file	*files;
+	char			*path;
 }					t_ls;
 
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);
-void				init_struct(t_flags *flags, t_ls *ls, int size);
+void				init_struct(t_flags *flags, t_ls *ls);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
 void				read_objs(t_flags *flags, t_ls *ls);
 t_file				*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat);
@@ -66,4 +65,5 @@ void				print_errors(t_ls *ls);
 void				print_cat_error(char *cat, char *error);
 void				alpha_sort(t_file *file);
 void				rev_sort(t_file *file, int i, int j);
+void				recursion(t_ls *ls, t_flags *flags);
 #endif

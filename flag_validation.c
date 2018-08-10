@@ -14,7 +14,6 @@
 
 static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 {
-	ls->flags++;
 	while (arg[++i] != '\0')
 	{
 		if (!ft_strchr(FLAGS, arg[i]))
