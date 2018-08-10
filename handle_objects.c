@@ -31,8 +31,6 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 				t_file_pushback(&dirs, sd->d_name, cat);
 		}
 	}
-//	rev_sort(file, -1, 0);
-//	rev_sort(dirs, -1, 0);
 	temp = file;
 	if (file)
 	{
