@@ -50,6 +50,7 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 	int		arg;
 
 	arg = 0;
+	ls->path = ft_strdup("");
 	while (++arg < argc)
 	{
 		if (argv[arg] && !ls->objs && !ls->err && !ft_strequ(argv[arg], "--")
@@ -67,7 +68,7 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 			ft_strequ(strerror(errno), "No such file or directory"))
 				t_file_pushback(&(ls->err), argv[arg], strerror(errno));
 			else if (argv[arg])
-				t_file_pushback(&(ls->objs), argv[arg], "");
+				t_file_pushback(&(ls->objs), argv[arg], ls->path);
 		}
 	}
 	finish_parsing(ls, flags);

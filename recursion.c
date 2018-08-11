@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
+/*
 void		recursion(t_ls *ls, t_flags *flags)
 {
 	if (flags && ls) {}
@@ -30,3 +30,4 @@ void		recursion(t_ls *ls, t_flags *flags)
 		temp = temp->next;
 	}
 }
+*/

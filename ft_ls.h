@@ -42,6 +42,7 @@ typedef struct		s_flags
 
 typedef struct		s_ls
 {
+	struct s_file	*folders;
 	struct s_file	*objs;
 	struct s_file	*err;
 	struct s_file	*files;

@@ -46,37 +46,67 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 	return (file);
 }
 
+void		create_new_list(t_ls *ls, t_file *file, char *path)
+{
+	t_file		*temp;
+
+	temp = file;
+	ls->path = ft_strdup(path);
+	while (temp)
+	{
+		if ((opendir(temp->full)) == NULL &&
+		ft_strequ(strerror(errno), "Not a directory"))
+			t_file_pushback(&(ls->files), temp->full, path);
+		else
+		{
+			t_file_pushback(&(ls->objs), temp->full, path);
+		}
+		temp = temp->next;
+	}
+}
+
 void		read_objs(t_flags *flags, t_ls *ls)
 {
 	DIR				*dir;
 	t_file			*temp;
 	t_file			*file;
 	char			*cat;
+	t_ls			*new;
 
+	new = NULL;
+	new = (t_ls*)malloc(sizeof(t_ls));
+	new->folders = NULL;
+	new->objs = NULL;
+	new->files = NULL;
+	new->err = NULL;
+	temp = NULL;
 	temp = ls->objs;
 	sort_list(ls->objs, flags);
-	ls->path = ft_strdup("");
-	if (flags->recursive == 1)
-		recursion(ls, flags);
-	else
+	while (temp)
 	{
-		while (temp)
+		cat = ft_strjoin(temp->path, temp->name);
+		if ((count_list_length(ls->objs) > 1 || ls->err || ls->files))
+			ft_printf("%s:\n", cat);
+		dir = opendir(temp->full);
+		if (dir == NULL)
+			print_cat_error(cat, strerror(errno));
+		else
 		{
-			cat = ft_strjoin(temp->path, temp->name);
-			if ((count_list_length(ls->objs) > 1 || ls->err || ls->files))
-				ft_printf("%s:\n", cat);
-			dir = opendir(temp->name);
-			if (dir == NULL)
-				print_cat_error(cat, strerror(errno));
-			else
+			file = create_list(flags, ls, dir, cat);
+			print_list(ls, file, flags);
+			if (flags->recursive == 1)
 			{
-				file = create_list(flags, ls, dir, cat);
-				print_list(ls, file, flags);
-				closedir(dir);
+				create_new_list(new, file, ls->path);
+				if (new->objs)
+				{
+					write(1, "\n", 1);
+					read_objs(flags, new);
+				}
 			}
-			if (temp->next)
-				write(1, "\n", 1);
-			temp = temp->next;
+			closedir(dir);
 		}
+		if (temp->next)
+			write(1, "\n", 1);
+		temp = temp->next;
 	}
 }
