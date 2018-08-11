@@ -48,16 +48,25 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 
 void		create_new_list(t_ls *ls, t_file *file, char *path)
 {
-	t_file		*temp;
+	struct stat		stat_temp;
+	t_file			*temp;
 
 	temp = file;
 	ls->path = ft_strdup(path);
 	while (temp)
 	{
-		if ((opendir(temp->full)) == NULL &&
+		lstat(temp->full, &stat_temp);
+/*		if (S_ISLNK(stat_temp.st_mode))
+			printf("%s = %s\n", temp->full, "LINK");
+			if (S_ISDIR(stat_temp.st_mode))
+				printf("%s = %s\n", temp->full, "DIR");
+				if (S_ISREG(stat_temp.st_mode))
+					printf("%s = %s\n", temp->full, "REG");
+		ft_printf("temp->full = %s\n", temp->full);
+*/		if ((opendir(temp->full)) == NULL &&
 		ft_strequ(strerror(errno), "Not a directory"))
 			t_file_pushback(&(ls->files), temp->full, path);
-		else
+		else if ((S_ISDIR(stat_temp.st_mode)))
 		{
 			t_file_pushback(&(ls->objs), temp->full, path);
 		}
@@ -74,11 +83,6 @@ void		read_objs(t_flags *flags, t_ls *ls)
 	t_ls			*new;
 
 	new = NULL;
-	new = (t_ls*)malloc(sizeof(t_ls));
-	new->folders = NULL;
-	new->objs = NULL;
-	new->files = NULL;
-	new->err = NULL;
 	temp = NULL;
 	temp = ls->objs;
 	sort_list(ls->objs, flags);
@@ -96,12 +100,19 @@ void		read_objs(t_flags *flags, t_ls *ls)
 			print_list(ls, file, flags);
 			if (flags->recursive == 1)
 			{
+				new = (t_ls*)malloc(sizeof(t_ls));
+				new->folders = NULL;
+				new->objs = NULL;
+				new->files = NULL;
+				new->err = NULL;
 				create_new_list(new, file, ls->path);
 				if (new->objs)
 				{
 					write(1, "\n", 1);
 					read_objs(flags, new);
 				}
+				if (new)
+					free(new);
 			}
 			closedir(dir);
 		}
