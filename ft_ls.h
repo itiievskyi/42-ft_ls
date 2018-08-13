@@ -26,6 +26,8 @@ typedef struct		s_file
 	char			*name;
 	char			*path;
 	char			*full;
+	char			type;
+	char			chmod[9];
 	struct stat		stat;
 	struct s_file	*next;
 	struct s_file	*prev;
@@ -49,6 +51,13 @@ typedef struct		s_ls
 	char			*path;
 }					t_ls;
 
+typedef struct		s_pstat
+{
+	int				maxusr;
+	int				maxgrp;
+	int				total;
+}					t_pstat;
+
 void				check_args(int argc, char **argv, t_flags *flags, t_ls *ls);
 void				init_struct(t_flags *flags, t_ls *ls);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
@@ -61,10 +70,12 @@ void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
 void				print_list(t_ls *ls, t_file *file, t_flags *flags);
 void				display(t_ls *ls, t_file *file);
+void				display_long(t_ls *ls, t_file *file);
 int					count_list_length(t_file *file);
 void				print_errors(t_ls *ls);
 void				print_cat_error(char *cat, char *error);
 void				alpha_sort(t_file *file);
 void				rev_sort(t_file *file, int i, int j);
 void				recursion(t_ls *ls, t_flags *flags);
+void				init_pstat(t_pstat *pstat);
 #endif

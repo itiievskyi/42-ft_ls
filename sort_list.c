@@ -48,12 +48,14 @@ void		time_sort(t_file *file)
 	temp = file;
 	while (temp && temp->next)
 	{
-		if (((temp->stat).st_mtimespec.tv_sec < (temp->next->stat).st_mtimespec.tv_sec))
+		if (((temp->stat).st_mtimespec.tv_sec <
+		(temp->next->stat).st_mtimespec.tv_sec))
 		{
 			swap_t_file(temp, temp->next);
 			temp = file;
 		}
-		else if (((temp->stat).st_mtimespec.tv_sec == (temp->next->stat).st_mtimespec.tv_sec) &&
+		else if (((temp->stat).st_mtimespec.tv_sec ==
+		(temp->next->stat).st_mtimespec.tv_sec) &&
 		((temp->stat).st_mtimespec.tv_nsec <
 		(temp->next->stat).st_mtimespec.tv_nsec))
 		{

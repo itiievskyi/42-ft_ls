@@ -57,17 +57,11 @@ void		create_new_list(t_ls *ls, t_file *file, char *path)
 	while (temp)
 	{
 		lstat(temp->full, &stat_temp);
-/*		if (S_ISLNK(stat_temp.st_mode))
-			printf("%s = %s\n", temp->full, "LINK");
-			if (S_ISDIR(stat_temp.st_mode))
-				printf("%s = %s\n", temp->full, "DIR");
-				if (S_ISREG(stat_temp.st_mode))
-					printf("%s = %s\n", temp->full, "REG");
-		ft_printf("temp->full = %s\n", temp->full);
-*/		if ((dir = opendir(temp->full)) == NULL &&
+		if ((dir = opendir(temp->full)) == NULL &&
 		ft_strequ(strerror(errno), "Not a directory"))
 			t_file_pushback(&(ls->files), temp->full, path);
-		else if ((S_ISDIR(stat_temp.st_mode)) && !ft_strequ(".", temp->name) && !ft_strequ("..", temp->name))
+		else if ((S_ISDIR(stat_temp.st_mode)) && !ft_strequ(".", temp->name)
+		&& !ft_strequ("..", temp->name))
 		{
 			t_file_pushback(&(ls->objs), temp->full, path);
 		}

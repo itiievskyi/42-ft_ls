@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_columns.c                                  :+:      :+:    :+:   */
+/*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,17 +14,17 @@
 
 void		display(t_ls *ls, t_file *file)
 {
-	t_file			*file1;
+	t_file			*temp;
 
-	file1 = file;
-	while (file1 && ls)
+	temp = file;
+	while (temp && ls)
 	{
 //		ft_printf("%d\t", (file1->stat).st_mode);
 //		ft_printf("%s\t", file1->full);
-		ft_printf("%s\n", file1->name);
+		ft_printf("%s\n", temp->name);
 //		ft_printf("%s\t", file1->path);
 //		ft_printf("%s", ctime(&(file1->stat).st_mtime));
-		file1 = file1->next;
+		temp = temp->next;
 	}
 }
 
@@ -35,4 +35,6 @@ void		print_list(t_ls *ls, t_file *file, t_flags *flags)
 	length = count_list_length(ls->objs);
 	if (!flags->longform)
 		display(ls, file);
+	else if (flags->longform == 1)
+		display_long(ls, file);
 }

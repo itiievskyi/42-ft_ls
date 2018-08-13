@@ -29,12 +29,12 @@ SOURCES =	main.c \
 			quit.c \
 			utils.c \
 			handle_objects.c \
-			display_columns.c \
+			display.c \
+			display_long.c \
 			t_file.c \
 			sort_list.c \
 			swaps.c \
 			errors.c \
-			recursion.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

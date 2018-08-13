@@ -25,11 +25,6 @@ int		main(int argc, char **argv)
 		check_args(argc, argv, flags, ls);
 	}
 	read_objs(flags, ls);
-//	ft_sort_strtab(ls->objs, "asc");
-//	ft_sort_strtab(ls->objs, "desc");
-//	int a = -1;
-//	while (ls->objs[++a])
-//		ft_printf("objs[%d] = %s\n", a, ls->objs[a]);
 //	system("leaks ft_ls > leaks.out");
 	return (0);
 }

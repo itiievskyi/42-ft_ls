@@ -25,3 +25,10 @@ void		init_struct(t_flags *flags, t_ls *ls)
 	ls->err = NULL;
 	ls->path = NULL;
 }
+
+void		init_pstat(t_pstat *pstat)
+{
+	pstat->maxgrp = 0;
+	pstat->maxusr = 0;
+	pstat->total = 0;
+}
