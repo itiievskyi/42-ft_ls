@@ -31,6 +31,7 @@ SOURCES =	main.c \
 			handle_objects.c \
 			display.c \
 			display_long.c \
+			get_long_attr.c \
 			t_file.c \
 			sort_list.c \
 			swaps.c \
