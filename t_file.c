@@ -35,7 +35,7 @@ t_file		*t_file_new(char *name, char *cat)
 	file = (t_file*)malloc(sizeof(t_file));
 	file->name = ft_strdup(name);
 	file->path = ft_strdup(cat);
-	if (cat && cat[0] != '\0' && !ft_strequ(cat, "."))
+	if ((cat && cat[0] != '\0'))
 	{
 		temp = ft_strjoin(cat, "/");
 		file->full = ft_strjoin(temp, name);

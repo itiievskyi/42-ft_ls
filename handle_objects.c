@@ -50,6 +50,7 @@ void		create_new_list(t_ls *ls, t_file *file, char *path)
 {
 	struct stat		stat_temp;
 	t_file			*temp;
+	DIR				*dir;
 
 	temp = file;
 	ls->path = ft_strdup(path);
@@ -63,13 +64,15 @@ void		create_new_list(t_ls *ls, t_file *file, char *path)
 				if (S_ISREG(stat_temp.st_mode))
 					printf("%s = %s\n", temp->full, "REG");
 		ft_printf("temp->full = %s\n", temp->full);
-*/		if ((opendir(temp->full)) == NULL &&
+*/		if ((dir = opendir(temp->full)) == NULL &&
 		ft_strequ(strerror(errno), "Not a directory"))
 			t_file_pushback(&(ls->files), temp->full, path);
-		else if ((S_ISDIR(stat_temp.st_mode)) && !ft_strequ(".", temp->name))
+		else if ((S_ISDIR(stat_temp.st_mode)) && !ft_strequ(".", temp->name) && !ft_strequ("..", temp->name))
 		{
 			t_file_pushback(&(ls->objs), temp->full, path);
 		}
+		if (dir)
+			closedir(dir);
 		temp = temp->next;
 	}
 }
@@ -89,7 +92,8 @@ void		read_objs(t_flags *flags, t_ls *ls)
 	while (temp)
 	{
 		cat = ft_strjoin(temp->path, temp->name);
-		if ((count_list_length(ls->objs) > 1 || ls->err || ls->files))
+		if ((count_list_length(ls->objs) > 1 || ls->err || ls->files) ||
+		(flags->recursive == 1 && !ft_strequ(cat, ".")))
 			ft_printf("%s:\n", cat);
 		dir = opendir(temp->full);
 		if (dir == NULL)
