@@ -20,7 +20,10 @@
 # include <time.h>
 # include <stdio.h>
 # include <sys/xattr.h>
-#include <sys/acl.h>
+# include <sys/acl.h>
+# include <pwd.h>
+# include <uuid/uuid.h>
+# include <grp.h>
 # define FLAGS "1Ralrt"
 
 typedef struct		s_file
@@ -28,8 +31,11 @@ typedef struct		s_file
 	char			*name;
 	char			*path;
 	char			*full;
+	char			*user;
+	char			*group;
 	char			type;
 	char			chmod[10];
+	char			*target;
 	struct stat		stat;
 	struct s_file	*next;
 	struct s_file	*prev;
@@ -58,6 +64,7 @@ typedef struct		s_pstat
 	int				maxusr;
 	int				maxgrp;
 	int				maxlnk;
+	int				maxsize;
 	int				total;
 }					t_pstat;
 

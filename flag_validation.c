@@ -63,7 +63,7 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 				arg++;
 			if (argv[arg] && (opendir(argv[arg])) == NULL &&
 			ft_strequ(strerror(errno), "Not a directory"))
-				t_file_pushback(&(ls->files), argv[arg], "");
+				t_file_pushback(&(ls->files), argv[arg], ls->path);
 			else if (argv[arg] && (opendir(argv[arg])) == NULL &&
 			ft_strequ(strerror(errno), "No such file or directory"))
 				t_file_pushback(&(ls->err), argv[arg], strerror(errno));
