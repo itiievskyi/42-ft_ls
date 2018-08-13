@@ -66,7 +66,7 @@ void		create_new_list(t_ls *ls, t_file *file, char *path)
 */		if ((opendir(temp->full)) == NULL &&
 		ft_strequ(strerror(errno), "Not a directory"))
 			t_file_pushback(&(ls->files), temp->full, path);
-		else if ((S_ISDIR(stat_temp.st_mode)))
+		else if ((S_ISDIR(stat_temp.st_mode)) && !ft_strequ(".", temp->name))
 		{
 			t_file_pushback(&(ls->objs), temp->full, path);
 		}
