@@ -86,8 +86,9 @@ void		read_objs(t_flags *flags, t_ls *ls)
 	while (temp)
 	{
 		cat = ft_strjoin(temp->path, temp->name);
-		if ((count_list_length(ls->objs) > 1 || ls->err || ls->files) ||
-		(flags->recursive == 1 && !ft_strequ(cat, ".")))
+		if (((count_list_length(ls->objs) > 1 || ls->err || ls->files) &&
+		!flags->recursive) || (flags->recursive && !(ls->start == 1 &&
+		count_list_length(ls->objs) < 2 && !ls->err && !ls->files)))
 			ft_printf("%s:\n", cat);
 		dir = opendir(temp->full);
 		if (dir == NULL)
@@ -99,7 +100,6 @@ void		read_objs(t_flags *flags, t_ls *ls)
 			if (flags->recursive == 1)
 			{
 				new = (t_ls*)malloc(sizeof(t_ls));
-				new->folders = NULL;
 				new->objs = NULL;
 				new->files = NULL;
 				new->err = NULL;

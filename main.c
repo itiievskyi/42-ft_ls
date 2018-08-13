@@ -22,6 +22,7 @@ int		main(int argc, char **argv)
 		(ls = (t_ls*)malloc(sizeof(t_ls))))
 	{
 		init_struct(flags, ls);
+		ls->start = 1;
 		check_args(argc, argv, flags, ls);
 	}
 	read_objs(flags, ls);

@@ -109,6 +109,24 @@ void		parse_list(t_pstat *pstat, t_file *file)
 	}
 }
 
+void		print_time(t_file *temp)
+{
+	if ((time(NULL) - temp->stat.st_mtime < 15780000 &&
+	temp->stat.st_mtime - time(NULL) < 15780000))
+	{
+		ft_printf("%.12s", ctime(&temp->stat.st_mtime) + 4);
+	}
+	else if ((ctime(&temp->stat.st_mtime) + 20)[0] != ' ')
+	{
+		ft_printf("%.7s %.4s", ctime(&temp->stat.st_mtime) + 4,
+		ctime(&temp->stat.st_mtime) + 20);
+	}
+	else
+	{
+		ft_printf("%.7s 10000", ctime(&temp->stat.st_mtime) + 4);
+	}
+}
+
 void		display_long(t_ls *ls, t_file *file)
 {
 	t_file			*temp;
@@ -121,15 +139,11 @@ void		display_long(t_ls *ls, t_file *file)
 	(file == ls->files) ? 0 : ft_printf("total %d\n", pstat->total);
 	while (temp && ls)
 	{
-		ft_printf("%c%s %*d %-*s %-*s  %*d ",
+		ft_printf("%c%s %*d %-*s  %-*s  %*d ",
 		temp->type, temp->chmod, pstat->maxlnk, temp->stat.st_nlink,
 		pstat->maxusr, temp->user, pstat->maxgrp, temp->group,
 		pstat->maxsize, temp->stat.st_size);
-		(time(NULL) - temp->stat.st_mtime < 15780000 &&
-		temp->stat.st_mtime - time(NULL) < 15780000) ?
-		ft_printf("%.12s", ctime(&temp->stat.st_mtime) + 4) :
-		ft_printf("%.7s %.4s", ctime(&temp->stat.st_mtime) + 4,
-		ctime(&temp->stat.st_mtime) + 20);
+		print_time(temp);
 		ft_printf(" %s", temp->name);
 		if (temp->type == 'l' && temp->target)
 			ft_printf(" -> %s", temp->target);
