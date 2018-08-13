@@ -19,6 +19,8 @@
 # include <sys/stat.h>
 # include <time.h>
 # include <stdio.h>
+# include <sys/xattr.h>
+#include <sys/acl.h>
 # define FLAGS "1Ralrt"
 
 typedef struct		s_file
@@ -27,7 +29,7 @@ typedef struct		s_file
 	char			*path;
 	char			*full;
 	char			type;
-	char			chmod[9];
+	char			chmod[10];
 	struct stat		stat;
 	struct s_file	*next;
 	struct s_file	*prev;
@@ -55,6 +57,7 @@ typedef struct		s_pstat
 {
 	int				maxusr;
 	int				maxgrp;
+	int				maxlnk;
 	int				total;
 }					t_pstat;
 

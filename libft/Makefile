@@ -101,6 +101,7 @@ SOURCES =	ft_atoi.c\
 			ft_count_in_array.c\
 			ft_isdigit_str.c\
 			ft_sort_strtab.c\
+			ft_intlen.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

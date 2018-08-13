@@ -14,9 +14,12 @@
 
 void		define_chmod(t_file *file)
 {
-	mode_t val;
-	val=(file->stat.st_mode & ~S_IFMT);
+	mode_t 		val;
+	ssize_t		xattr;
+	acl_t		acl;
 
+	acl = NULL;
+	val = (file->stat.st_mode & ~S_IFMT);
 	file->chmod[0] = ((val & S_IRUSR) ? 'r' : '-');
 	file->chmod[1] = ((val & S_IWUSR) ? 'w' : '-');
 	file->chmod[2] = ((val & S_IXUSR) ? 'x' : '-');
@@ -26,6 +29,16 @@ void		define_chmod(t_file *file)
 	file->chmod[6] = ((val & S_IROTH) ? 'r' : '-');
 	file->chmod[7] = ((val & S_IWOTH) ? 'w' : '-');
 	file->chmod[8] = ((val & S_IXOTH) ? 'x' : '-');
+	xattr = listxattr(file->full, NULL, 0, XATTR_NOFOLLOW);
+	xattr = (xattr < 0 ? 0 : xattr);
+	if (xattr > 0)
+		file->chmod[8] = '@';
+	else if ((acl = acl_get_link_np(file->full, ACL_TYPE_EXTENDED)))
+		file->chmod[8] = '+';
+	else
+		file->chmod[8] = ' ';
+	if (acl)
+		free (acl);
 }
 
 char		define_type(t_file *file)
@@ -48,11 +61,14 @@ char		define_type(t_file *file)
 void		parse_list(t_pstat *pstat, t_file *file)
 {
 	t_file			*temp;
+	int				lnk_len;
 
 	temp = file;
 	while (temp)
 	{
+		lnk_len = ft_intlen(temp->stat.st_nlink);
 		pstat->total += (temp->stat).st_blocks;
+		lnk_len > pstat->maxlnk ? pstat->maxlnk = lnk_len : 0;
 		temp->type = define_type(temp);
 		define_chmod(temp);
 		temp = temp->next;
@@ -71,7 +87,9 @@ void		display_long(t_ls *ls, t_file *file)
 	ft_printf("total %d\n", pstat->total);
 	while (temp && ls)
 	{
-		ft_printf("%c%s %s\n", temp->type, temp->chmod, temp->name);
+		ft_printf("%c%s %*d %s\n",
+		temp->type, temp->chmod, pstat->maxlnk, temp->stat.st_nlink,
+		temp->name);
 		temp = temp->next;
 	}
 }

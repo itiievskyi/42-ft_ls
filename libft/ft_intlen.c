@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/06 14:23:25 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/08/06 14:23:27 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/08/13 13:30:48 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/08/13 13:30:50 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-void		init_struct(t_flags *flags, t_ls *ls)
+int		ft_intlen(int nbr)
 {
-	flags->longform = 0;
-	flags->dotfiles = 0;
-	flags->revsort = 0;
-	flags->recursive = 0;
-	flags->timesort = 0;
-	ls->folders = NULL;
-	ls->objs = NULL;
-	ls->files = NULL;
-	ls->err = NULL;
-	ls->path = NULL;
-}
+	int		length;
 
-void		init_pstat(t_pstat *pstat)
-{
-	pstat->maxgrp = 0;
-	pstat->maxusr = 0;
-	pstat->maxlnk = 1;
-	pstat->total = 0;
+	length = 0;
+	if (nbr == 0)
+		return (1);
+	if (nbr < 0)
+	{
+		length += 1;
+		nbr *= -1;
+	}
+	while (nbr != 0)
+	{
+		length += 1;
+		nbr /= 10;
+	}
+	return (length);
 }
