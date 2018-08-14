@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void		parse_list(t_pstat *pstat, t_file *file, t_flags *flags)
+static void	parse_list(t_pstat *pstat, t_file *file, t_flags *flags)
 {
 	t_file			*temp;
 	int				lnk_len;
@@ -33,16 +33,21 @@ void		parse_list(t_pstat *pstat, t_file *file, t_flags *flags)
 	}
 }
 
-void		print_time(t_file *temp)
+static void	print_time(t_file *temp, t_flags *flags)
 {
-	if ((time(NULL) - temp->ftime < 15780000 &&
-	temp->ftime - time(NULL) < 15780000))
-		ft_printf("%.12s", ctime(&temp->ftime) + 4);
-	else if ((ctime(&temp->ftime) + 20)[0] != ' ')
-		ft_printf("%.7s %.4s", ctime(&temp->ftime) + 4,
-		ctime(&temp->ftime) + 20);
+	if (flags->fulltime == 1)
+		ft_printf("%.20s", ctime(&temp->ftime) + 4);
 	else
-		ft_printf("%.7s 10000", ctime(&temp->ftime) + 4);
+	{
+		if ((time(NULL) - temp->ftime < 15780000 &&
+		temp->ftime - time(NULL) < 15780000))
+			ft_printf("%.12s", ctime(&temp->ftime) + 4);
+		else if ((ctime(&temp->ftime) + 20)[0] != ' ')
+			ft_printf("%.7s %.4s", ctime(&temp->ftime) + 4,
+			ctime(&temp->ftime) + 20);
+		else
+			ft_printf("%.7s 10000", ctime(&temp->ftime) + 4);
+	}
 }
 
 void		display_long(t_ls *ls, t_file *file, t_flags *flags)
@@ -57,13 +62,13 @@ void		display_long(t_ls *ls, t_file *file, t_flags *flags)
 	(file != ls->files && file) ? ft_printf("total %d\n", pstat->total) : 0;
 	while (temp && ls)
 	{
-		ft_printf("%c%s %*d %-*s%-*s  %*d ",
+		ft_printf("%c%s %*d %-*s%-*s%*d ",
 		temp->type, temp->chmod, pstat->maxlnk, temp->stat.st_nlink,
 		pstat->maxusr, temp->user, pstat->maxgrp, temp->group,
 		pstat->maxsize, temp->stat.st_size);
-		print_time(temp);
+		print_time(temp, flags);
 		ft_printf(" %s", temp->name);
-		(temp->type == 'd' && flags->slashdir == 1) ? write(1, "/", 1) : 0;
+		pf_flags_display(temp, flags);
 		if (temp->type == 'l' && temp->target)
 			ft_printf(" -> %s", temp->target);
 		write(1, "\n", 1);

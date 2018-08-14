@@ -24,7 +24,7 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
-# define FLAGS "1ARSUacdfglprtu"
+# define FLAGS "1AFRSTUacdfgloprtu"
 
 typedef struct		s_file
 {
@@ -53,9 +53,11 @@ typedef struct		s_flags
 	int				timesort;
 	int				listdirs;
 	int				noparent;
-	int				slashdir;
 	int				noowner;
+	int				nogroup;
 	int				nosort;
+	int				fulltime;
+	int				filetypes;
 	char			time_type;
 }					t_flags;
 
@@ -108,4 +110,5 @@ void				get_d_list(char *arg, t_flags *flags, t_ls *ls);
 void				define_time(t_flags *flags, t_file *file);
 void				size_sort(t_file *file);
 void				insensitive_sort(t_file *file);
+void				pf_flags_display(t_file *temp, t_flags *flags);
 #endif

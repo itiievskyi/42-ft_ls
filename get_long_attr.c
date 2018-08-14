@@ -82,8 +82,6 @@ void		get_owner(t_pstat *pstat, t_file *file, t_flags *flags)
 	struct passwd	*passwd;
 	struct group	*group;
 
-	group = NULL;
-	passwd = NULL;
 	passwd = getpwuid(file->stat.st_uid);
 	if (passwd && flags->noowner == 0)
 		file->user = ft_strjoin(passwd->pw_name, "  ");
@@ -94,10 +92,14 @@ void		get_owner(t_pstat *pstat, t_file *file, t_flags *flags)
 	usr_len = ft_strlen(file->user);
 	usr_len > pstat->maxusr ? pstat->maxusr = usr_len : 0;
 	group = getgrgid(file->stat.st_gid);
-	if (group)
-		file->group = ft_strdup(group->gr_name);
+	if (group && flags->nogroup == 0)
+		file->group = ft_strjoin(group->gr_name, "  ");
+	else if (flags->nogroup == 0)
+		file->group = ft_strjoin(ft_itoa(file->stat.st_gid), "  ");
+	else if (flags->nogroup && flags->noowner)
+		file->group = ft_strdup("  ");
 	else
-		file->group = ft_strdup(ft_itoa(file->stat.st_gid));
+		file->group = ft_strdup("");
 	grp_len = ft_strlen(file->group);
 	grp_len > pstat->maxgrp ? pstat->maxgrp = grp_len : 0;
 }
