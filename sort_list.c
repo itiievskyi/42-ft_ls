@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-static void	swap_t_file(t_file *one, t_file *two)
+void		swap_t_file(t_file *one, t_file *two)
 {
 	ft_str_swap(&(one->name), &(two->name));
 	ft_str_swap(&(one->path), &(two->path));
@@ -86,8 +86,10 @@ void		alpha_sort(t_file *file)
 void		sort_list(t_file *file, t_flags *flags)
 {
 	alpha_sort(file);
-	if (flags->timesort == 1)
+	if (flags->timesort == 1 && flags->sizesort == 0)
 		time_sort(file);
+	if (flags->sizesort == 1)
+		size_sort(file);
 	if (flags->revsort == 1)
 		rev_sort(file, -1, 0);
 }

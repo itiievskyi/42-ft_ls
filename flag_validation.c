@@ -23,11 +23,13 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 		arg[i] == 'a' ? flags->dotfiles = 1 : 0;
 		arg[i] == 'r' ? flags->revsort = 1 : 0;
 		arg[i] == 'R' ? flags->recursive = 1 : 0;
+		arg[i] == 'S' ? flags->sizesort = 1 : 0;
 		arg[i] == 't' ? flags->timesort = 1 : 0;
 		arg[i] == 'd' ? flags->listdirs = 1 : 0;
 		arg[i] == 'c' ? flags->time_type = 'c' : 0;
 		arg[i] == 'U' ? flags->time_type = 'U' : 0;
 		arg[i] == 'u' ? flags->time_type = 'u' : 0;
+		arg[i] == '1' ? flags->longform = 0 : 0;
 	}
 }
 

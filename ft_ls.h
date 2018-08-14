@@ -24,7 +24,7 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
-# define FLAGS "1ARUacdlrtu"
+# define FLAGS "1ARSUacdlrtu"
 
 typedef struct		s_file
 {
@@ -49,6 +49,7 @@ typedef struct		s_flags
 	int				dotfiles;
 	int				revsort;
 	int				recursive;
+	int				sizesort;
 	int				timesort;
 	int				listdirs;
 	int				noparent;
@@ -82,6 +83,7 @@ int					t_file_pushback(t_file **begin, char *name, char *cat,
 					t_flags *flags);
 t_file				*t_file_new(char *name, char *cat, t_flags *flags);
 void				sort_list(t_file *file, t_flags *flags);
+void				swap_t_file(t_file *one, t_file *two);
 void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
 void				ft_time_swap(time_t *a, time_t *b);
@@ -101,4 +103,5 @@ void				get_owner(t_pstat *pstat, t_file *file);
 void				init_t_file(t_file *file);
 void				get_d_list(char *arg, t_flags *flags, t_ls *ls);
 void				define_time(t_flags *flags, t_file *file);
+void				size_sort(t_file *file);
 #endif
