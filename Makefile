@@ -36,6 +36,7 @@ SOURCES =	main.c \
 			sort_list.c \
 			swaps.c \
 			errors.c \
+			flag_d.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

@@ -28,12 +28,21 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 			flags->recursive = 1;
 		else if (arg[i] == 't')
 			flags->timesort = 1;
+		else if (arg[i] == 'd')
+			flags->listdirs = 1;
 	}
 }
 
 static void	finish_parsing(t_ls *ls, t_flags *flags)
 {
 	print_errors(ls);
+	if (!ls->objs && !ls->err && !ls->files && flags->listdirs == 0)
+		t_file_pushback(&(ls->objs), ".", "");
+	if (!ls->files && flags->listdirs == 1)
+	{
+		flags->dotfiles = 1;
+		t_file_pushback(&(ls->files), ".", "");
+	}
 	if (ls->files)
 	{
 		sort_list(ls->files, flags);
@@ -41,22 +50,42 @@ static void	finish_parsing(t_ls *ls, t_flags *flags)
 		if (ls->objs)
 			write(1, "\n", 1);
 	}
-	if (!ls->objs && !ls->err && !ls->files)
-		t_file_pushback(&(ls->objs), ".", "");
+}
+
+static void	get_list(char *arg, t_flags *flags, t_ls *ls)
+{
+	char 		*buf;
+	struct stat	stat;
+
+	buf = (char*)malloc(sizeof(char) * 1024);
+	buf[0] = '\0';
+	if (arg)
+		readlink(arg, buf, 1024);
+	if (ft_strlen(buf) > 0 && flags->longform == 1)
+		t_file_pushback(&(ls->files), arg, ls->path);
+	else if (ft_strlen(buf) > 0 && (opendir(arg)) == NULL &&
+	ft_strequ(strerror(errno), "No such file or directory") &&
+	!lstat(arg, &stat))
+		t_file_pushback(&(ls->files), arg, ls->path);
+	else if (arg && (opendir(arg)) == NULL &&
+	ft_strequ(strerror(errno), "Not a directory"))
+		t_file_pushback(&(ls->files), arg, ls->path);
+	else if (arg && (opendir(arg)) == NULL &&
+	ft_strequ(strerror(errno), "No such file or directory"))
+		t_file_pushback(&(ls->err), arg, strerror(errno));
+	else if (arg)
+		t_file_pushback(&(ls->objs), arg, ls->path);
+	free(buf);
 }
 
 void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 {
 	int		arg;
-	char *buf = (char*)malloc(sizeof(char) * 1024);
-	buf[0] = '\0';
-	struct stat stat;
 
 	arg = 0;
 	ls->path = ft_strdup("");
 	while (++arg < argc)
 	{
-		buf[0] = '\0';
 		if (argv[arg] && !ls->objs && !ls->err && !ft_strequ(argv[arg], "--")
 		&& !ls->files && argv[arg][0] == '-' && !ft_strequ(argv[arg], "-"))
 			parse_flags(flags, ls, argv[arg], 0);
@@ -65,26 +94,10 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 			if (!ls->objs && !ls->err && !ls->files &&
 			ft_strequ(argv[arg], "--"))
 				arg++;
-			if (argv[arg])
-				readlink(argv[arg], buf, 1024);
-			if (ft_strlen(buf) > 0 && flags->longform == 1)
-			{
-				t_file_pushback(&(ls->files), argv[arg], ls->path);
-			}
-			else if (ft_strlen(buf) > 0 && (opendir(argv[arg])) == NULL &&
-			ft_strequ(strerror(errno), "No such file or directory") &&
-			!lstat(argv[arg], &stat))
-			{
-				t_file_pushback(&(ls->files), argv[arg], ls->path);
-			}
-			else if (argv[arg] && (opendir(argv[arg])) == NULL &&
-			ft_strequ(strerror(errno), "Not a directory"))
-				t_file_pushback(&(ls->files), argv[arg], ls->path);
-			else if (argv[arg] && (opendir(argv[arg])) == NULL &&
-			ft_strequ(strerror(errno), "No such file or directory"))
-				t_file_pushback(&(ls->err), argv[arg], strerror(errno));
-			else if (argv[arg])
-				t_file_pushback(&(ls->objs), argv[arg], ls->path);
+			if (flags->listdirs == 1)
+				get_d_list(argv[arg], flags, ls);
+			else
+				get_list(argv[arg], flags, ls);
 		}
 	}
 	finish_parsing(ls, flags);
