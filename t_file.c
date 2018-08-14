@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-int			count_list_length(t_file *file)
+int		count_list_length(t_file *file)
 {
 	t_file		*temp;
 	int			length;
@@ -27,7 +27,7 @@ int			count_list_length(t_file *file)
 	return (length);
 }
 
-t_file		*t_file_new(char *name, char *cat)
+t_file	*t_file_new(char *name, char *cat, t_flags *flags)
 {
 	t_file	*file;
 	char	*temp;
@@ -47,10 +47,11 @@ t_file		*t_file_new(char *name, char *cat)
 	file->prev = NULL;
 	lstat(file->full, &file->stat);
 	init_t_file(file);
+	define_time(flags, file);
 	return (file);
 }
 
-int			t_file_pushback(t_file **begin, char *name, char *cat)
+int		t_file_pushback(t_file **begin, char *name, char *cat, t_flags* flags)
 {
 	t_file *temp;
 
@@ -59,11 +60,11 @@ int			t_file_pushback(t_file **begin, char *name, char *cat)
 	{
 		while (temp->next)
 			temp = temp->next;
-		temp->next = t_file_new(name, cat);
+		temp->next = t_file_new(name, cat, flags);
 		temp->next->prev = temp;
 	}
 	else if (name)
-		*begin = t_file_new(name, cat);
+		*begin = t_file_new(name, cat, flags);
 	else
 		return (0);
 	return (1);

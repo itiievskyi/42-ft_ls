@@ -22,15 +22,15 @@ void	get_d_list(char *arg, t_flags *flags, t_ls *ls)
 	if (arg)
 		readlink(arg, buf, 1024);
 	if (ft_strlen(buf) > 0 && flags->longform == 1)
-		t_file_pushback(&(ls->files), arg, ls->path);
+		t_file_pushback(&(ls->files), arg, ls->path, flags);
 	else if (ft_strlen(buf) > 0 && (opendir(arg)) == NULL &&
 	ft_strequ(strerror(errno), "No such file or directory") &&
 	!lstat(arg, &stat))
-		t_file_pushback(&(ls->files), arg, ls->path);
+		t_file_pushback(&(ls->files), arg, ls->path, flags);
 	else if (arg && (opendir(arg)) == NULL &&
 	ft_strequ(strerror(errno), "No such file or directory"))
-		t_file_pushback(&(ls->err), arg, strerror(errno));
+		t_file_pushback(&(ls->err), arg, strerror(errno), flags);
 	else if (arg)
-		t_file_pushback(&(ls->files), arg, ls->path);
+		t_file_pushback(&(ls->files), arg, ls->path, flags);
 	free(buf);
 }

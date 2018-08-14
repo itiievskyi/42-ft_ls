@@ -24,7 +24,7 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
-# define FLAGS "1ARadlrt"
+# define FLAGS "1ARUacdlrtu"
 
 typedef struct		s_file
 {
@@ -36,6 +36,8 @@ typedef struct		s_file
 	char			type;
 	char			chmod[11];
 	char			*target;
+	time_t			ftime;
+	time_t			nsec;
 	struct stat		stat;
 	struct s_file	*next;
 	struct s_file	*prev;
@@ -50,6 +52,7 @@ typedef struct		s_flags
 	int				timesort;
 	int				listdirs;
 	int				noparent;
+	char			time_type;
 }					t_flags;
 
 typedef struct		s_ls
@@ -75,11 +78,13 @@ void				init_struct(t_flags *flags, t_ls *ls);
 void				wrong_arg(t_flags *flags, t_ls *ls, char ch);
 void				read_objs(t_flags *flags, t_ls *ls);
 t_file				*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat);
-int					t_file_pushback(t_file **begin, char *name, char *cat);
-t_file				*t_file_new(char *name, char *cat);
+int					t_file_pushback(t_file **begin, char *name, char *cat,
+					t_flags *flags);
+t_file				*t_file_new(char *name, char *cat, t_flags *flags);
 void				sort_list(t_file *file, t_flags *flags);
 void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
+void				ft_time_swap(time_t *a, time_t *b);
 void				print_list(t_ls *ls, t_file *file, t_flags *flags);
 void				display(t_ls *ls, t_file *file);
 void				display_long(t_ls *ls, t_file *file);
@@ -95,4 +100,5 @@ char				define_type(t_file *file);
 void				get_owner(t_pstat *pstat, t_file *file);
 void				init_t_file(t_file *file);
 void				get_d_list(char *arg, t_flags *flags, t_ls *ls);
+void				define_time(t_flags *flags, t_file *file);
 #endif

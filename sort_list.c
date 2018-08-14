@@ -18,6 +18,8 @@ static void	swap_t_file(t_file *one, t_file *two)
 	ft_str_swap(&(one->path), &(two->path));
 	ft_str_swap(&(one->full), &(two->full));
 	ft_stat_swap(&(one->stat), &(two->stat));
+	ft_time_swap(&(one->nsec), &(two->nsec));
+	ft_time_swap(&(one->ftime), &(two->ftime));
 }
 
 void		rev_sort(t_file *file, int i, int j)
@@ -48,16 +50,13 @@ void		time_sort(t_file *file)
 	temp = file;
 	while (temp && temp->next)
 	{
-		if (((temp->stat).st_mtimespec.tv_sec <
-		(temp->next->stat).st_mtimespec.tv_sec))
+		if (temp->ftime < temp->next->ftime)
 		{
 			swap_t_file(temp, temp->next);
 			temp = file;
 		}
-		else if (((temp->stat).st_mtimespec.tv_sec ==
-		(temp->next->stat).st_mtimespec.tv_sec) &&
-		((temp->stat).st_mtimespec.tv_nsec <
-		(temp->next->stat).st_mtimespec.tv_nsec))
+		else if ((temp->ftime == temp->next->ftime) &&
+		(temp->nsec < temp->next->nsec))
 		{
 			swap_t_file(temp, temp->next);
 			temp = file;

@@ -35,14 +35,14 @@ void		parse_list(t_pstat *pstat, t_file *file)
 
 void		print_time(t_file *temp)
 {
-	if ((time(NULL) - temp->stat.st_mtime < 15780000 &&
-	temp->stat.st_mtime - time(NULL) < 15780000))
-		ft_printf("%.12s", ctime(&temp->stat.st_mtime) + 4);
-	else if ((ctime(&temp->stat.st_mtime) + 20)[0] != ' ')
-		ft_printf("%.7s %.4s", ctime(&temp->stat.st_mtime) + 4,
-		ctime(&temp->stat.st_mtime) + 20);
+	if ((time(NULL) - temp->ftime < 15780000 &&
+	temp->ftime - time(NULL) < 15780000))
+		ft_printf("%.12s", ctime(&temp->ftime) + 4);
+	else if ((ctime(&temp->ftime) + 20)[0] != ' ')
+		ft_printf("%.7s %.4s", ctime(&temp->ftime) + 4,
+		ctime(&temp->ftime) + 20);
 	else
-		ft_printf("%.7s 10000", ctime(&temp->stat.st_mtime) + 4);
+		ft_printf("%.7s 10000", ctime(&temp->ftime) + 4);
 }
 
 void		display_long(t_ls *ls, t_file *file)

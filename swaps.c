@@ -29,3 +29,12 @@ void		ft_stat_swap(struct stat *a, struct stat *b)
 	*a = *b;
 	*b = z;
 }
+
+void		ft_time_swap(time_t *a, time_t *b)
+{
+	time_t z;
+
+	z = *a;
+	*a = *b;
+	*b = z;
+}

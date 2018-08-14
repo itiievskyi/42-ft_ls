@@ -29,9 +29,9 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 		{
 			if ((opendir(sd->d_name)) == NULL &&
 			ft_strequ(strerror(errno), "Not a directory"))
-				t_file_pushback(&file, sd->d_name, cat);
+				t_file_pushback(&file, sd->d_name, cat, flags);
 			else
-				t_file_pushback(&dirs, sd->d_name, cat);
+				t_file_pushback(&dirs, sd->d_name, cat, flags);
 		}
 	}
 	temp = file;
@@ -48,7 +48,7 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 	return (file);
 }
 
-void		create_new_list(t_ls *ls, t_file *file, char *path)
+void		create_new_list(t_ls *ls, t_file *file, char *path, t_flags *flags)
 {
 	struct stat		stat_temp;
 	t_file			*temp;
@@ -61,11 +61,11 @@ void		create_new_list(t_ls *ls, t_file *file, char *path)
 		lstat(temp->full, &stat_temp);
 		if ((dir = opendir(temp->full)) == NULL &&
 		ft_strequ(strerror(errno), "Not a directory"))
-			t_file_pushback(&(ls->files), temp->full, path);
+			t_file_pushback(&(ls->files), temp->full, path, flags);
 		else if ((S_ISDIR(stat_temp.st_mode)) && !ft_strequ(".", temp->name)
 		&& !ft_strequ("..", temp->name))
 		{
-			t_file_pushback(&(ls->objs), temp->full, path);
+			t_file_pushback(&(ls->objs), temp->full, path, flags);
 		}
 		if (dir)
 			closedir(dir);
@@ -105,7 +105,7 @@ void		read_objs(t_flags *flags, t_ls *ls)
 				new->objs = NULL;
 				new->files = NULL;
 				new->err = NULL;
-				create_new_list(new, file, ls->path);
+				create_new_list(new, file, ls->path, flags);
 				if (new->objs)
 				{
 					write(1, "\n", 1);
