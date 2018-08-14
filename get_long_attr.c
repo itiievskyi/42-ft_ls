@@ -12,23 +12,12 @@
 
 #include "ft_ls.h"
 
-void		define_chmod(t_file *file)
+static void	get_acl_last(t_file *file)
 {
-	mode_t 		val;
 	ssize_t		xattr;
 	acl_t		acl;
 
 	acl = NULL;
-	val = (file->stat.st_mode & ~S_IFMT);
-	file->chmod[0] = ((val & S_IRUSR) ? 'r' : '-');
-	file->chmod[1] = ((val & S_IWUSR) ? 'w' : '-');
-	file->chmod[2] = ((val & S_IXUSR) ? 'x' : '-');
-	file->chmod[3] = ((val & S_IRGRP) ? 'r' : '-');
-	file->chmod[4] = ((val & S_IWGRP) ? 'w' : '-');
-	file->chmod[5] = ((val & S_IXGRP) ? 'x' : '-');
-	file->chmod[6] = ((val & S_IROTH) ? 'r' : '-');
-	file->chmod[7] = ((val & S_IWOTH) ? 'w' : '-');
-	file->chmod[8] = ((val & S_IXOTH) ? 'x' : '-');
 	xattr = listxattr(file->full, NULL, 0, XATTR_NOFOLLOW);
 	xattr = (xattr < 0 ? 0 : xattr);
 	if (xattr > 0)
@@ -39,6 +28,29 @@ void		define_chmod(t_file *file)
 		file->chmod[9] = ' ';
 	if (acl)
 		free (acl);
+}
+
+void		define_chmod(t_file *file)
+{
+	mode_t 		val;
+
+	val = (file->stat.st_mode & ~S_IFMT);
+	file->chmod[0] = ((val & S_IRUSR) ? 'r' : '-');
+	file->chmod[1] = ((val & S_IWUSR) ? 'w' : '-');
+	file->chmod[2] = ((val & S_IXUSR) ? 'x' : '-');
+	file->chmod[3] = ((val & S_IRGRP) ? 'r' : '-');
+	file->chmod[4] = ((val & S_IWGRP) ? 'w' : '-');
+	file->chmod[5] = ((val & S_IXGRP) ? 'x' : '-');
+	file->chmod[6] = ((val & S_IROTH) ? 'r' : '-');
+	file->chmod[7] = ((val & S_IWOTH) ? 'w' : '-');
+	file->chmod[8] = ((val & S_IXOTH) ? 'x' : '-');
+	((val & S_ISVTX) && (val & S_IXOTH)) ? file->chmod[8] = 't' : 0;
+	((val & S_ISVTX) && !(val & S_IXOTH)) ? file->chmod[8] = 'T' : 0;
+	((val & S_ISUID) && (val & S_IXUSR)) ? file->chmod[2] = 's' : 0;
+	((val & S_ISUID) && !(val & S_IXUSR)) ? file->chmod[2] = 'S' : 0;
+	((val & S_ISGID) && (val & S_IXGRP)) ? file->chmod[5] = 's' : 0;
+	((val & S_ISGID) && !(val & S_IXGRP)) ? file->chmod[5] = 'S' : 0;
+	get_acl_last(file);
 }
 
 char		define_type(t_file *file)
