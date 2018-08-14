@@ -20,6 +20,7 @@ void		init_struct(t_flags *flags, t_ls *ls)
 	flags->recursive = 0;
 	flags->timesort = 0;
 	flags->listdirs = 0;
+	flags->noparent = 0;
 	ls->objs = NULL;
 	ls->files = NULL;
 	ls->err = NULL;

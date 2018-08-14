@@ -18,6 +18,8 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 	{
 		if (!ft_strchr(FLAGS, arg[i]))
 			wrong_arg(flags, ls, arg[i]);
+		else if (arg[i] == 'A')
+			flags->noparent = 1;
 		else if (arg[i] == 'l')
 			flags->longform = 1;
 		else if (arg[i] == 'a')

@@ -24,7 +24,7 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
-# define FLAGS "1Radlrt"
+# define FLAGS "1ARadlrt"
 
 typedef struct		s_file
 {
@@ -49,6 +49,7 @@ typedef struct		s_flags
 	int				recursive;
 	int				timesort;
 	int				listdirs;
+	int				noparent;
 }					t_flags;
 
 typedef struct		s_ls

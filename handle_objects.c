@@ -23,7 +23,9 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 	dirs = NULL;
 	while ((sd = readdir(dir)) != NULL)
 	{
-		if (sd->d_name[0] != '.' || (sd->d_name[0] == '.' && flags->dotfiles))
+		if (sd->d_name[0] != '.' || (sd->d_name[0] == '.' && flags->dotfiles) ||
+		(sd->d_name[0] == '.' && flags->noparent && !ft_strequ(sd->d_name, ".")
+		&& !ft_strequ(sd->d_name, "..")))
 		{
 			if ((opendir(sd->d_name)) == NULL &&
 			ft_strequ(strerror(errno), "Not a directory"))
