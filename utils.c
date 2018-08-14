@@ -33,3 +33,12 @@ void		init_pstat(t_pstat *pstat)
 	pstat->maxlnk = 1;
 	pstat->total = 0;
 }
+
+void		init_t_file(t_file *file)
+{
+	file->user = NULL;
+	file->group = NULL;
+	file->type = '\0';
+	ft_bzero(file->chmod, sizeof(file->chmod));
+	file->target = NULL;
+}

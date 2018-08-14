@@ -2,7 +2,7 @@
 
 make
 
-ls $@ > /tmp/diff_ls
+/bin/ls $@ > /tmp/diff_ls
 ./ft_ls $@ > /tmp/diff_my
 vim -d /tmp/diff_ls /tmp/diff_my
 rm /tmp/diff_ls /tmp/diff_my

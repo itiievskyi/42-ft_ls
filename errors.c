@@ -34,11 +34,19 @@ void		print_errors(t_ls *ls)
 
 void		print_cat_error(char *cat, char *error)
 {
+	char	**arr;
+	int		a;
+
+	a = 0;
+	arr = ft_strsplit(cat, '/');
+	while (arr[a + 1])
+		a++;
 	ft_putstr_fd("ft_ls: ", 2);
 	if (cat)
-		ft_putstr_fd(cat, 2);
+		ft_putstr_fd(arr[a], 2);
 	ft_putstr_fd(": ", 2);
 	if (error)
 		ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
+	ft_clean_str_array(arr);
 }

@@ -34,7 +34,7 @@ typedef struct		s_file
 	char			*user;
 	char			*group;
 	char			type;
-	char			chmod[10];
+	char			chmod[11];
 	char			*target;
 	struct stat		stat;
 	struct s_file	*next;
@@ -91,4 +91,5 @@ void				init_pstat(t_pstat *pstat);
 void				define_chmod(t_file *file);
 char				define_type(t_file *file);
 void				get_owner(t_pstat *pstat, t_file *file);
+void				init_t_file(t_file *file);
 #endif

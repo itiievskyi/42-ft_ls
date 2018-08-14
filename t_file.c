@@ -46,6 +46,7 @@ t_file		*t_file_new(char *name, char *cat)
 	file->next = NULL;
 	file->prev = NULL;
 	lstat(file->full, &file->stat);
+	init_t_file(file);
 	return (file);
 }
 

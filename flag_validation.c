@@ -48,11 +48,15 @@ static void	finish_parsing(t_ls *ls, t_flags *flags)
 void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 {
 	int		arg;
+	char *buf = (char*)malloc(sizeof(char) * 1024);
+	buf[0] = '\0';
+	struct stat stat;
 
 	arg = 0;
 	ls->path = ft_strdup("");
 	while (++arg < argc)
 	{
+		buf[0] = '\0';
 		if (argv[arg] && !ls->objs && !ls->err && !ft_strequ(argv[arg], "--")
 		&& !ls->files && argv[arg][0] == '-' && !ft_strequ(argv[arg], "-"))
 			parse_flags(flags, ls, argv[arg], 0);
@@ -61,7 +65,19 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 			if (!ls->objs && !ls->err && !ls->files &&
 			ft_strequ(argv[arg], "--"))
 				arg++;
-			if (argv[arg] && (opendir(argv[arg])) == NULL &&
+			if (argv[arg])
+				readlink(argv[arg], buf, 1024);
+			if (ft_strlen(buf) > 0 && flags->longform == 1)
+			{
+				t_file_pushback(&(ls->files), argv[arg], ls->path);
+			}
+			else if (ft_strlen(buf) > 0 && (opendir(argv[arg])) == NULL &&
+			ft_strequ(strerror(errno), "No such file or directory") &&
+			!lstat(argv[arg], &stat))
+			{
+				t_file_pushback(&(ls->files), argv[arg], ls->path);
+			}
+			else if (argv[arg] && (opendir(argv[arg])) == NULL &&
 			ft_strequ(strerror(errno), "Not a directory"))
 				t_file_pushback(&(ls->files), argv[arg], ls->path);
 			else if (argv[arg] && (opendir(argv[arg])) == NULL &&
