@@ -149,5 +149,6 @@ int				ft_count_in_array(char **arr, char *str);
 int				ft_isdigit_str(char *str);
 int				ft_intlen(int nbr);
 void			ft_clean_str_array(char **arr);
+int				ft_strcmp_nocase(const char *s1, const char *s2);
 
 #endif

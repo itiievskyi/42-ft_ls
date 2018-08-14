@@ -12,18 +12,18 @@
 
 #include "ft_ls.h"
 
-void		display(t_ls *ls, t_file *file)
+void		display(t_ls *ls, t_file *file, t_flags *flags)
 {
 	t_file			*temp;
 
 	temp = file;
 	while (temp && ls)
 	{
-//		ft_printf("%d\t", (file1->stat).st_mode);
-//		ft_printf("%s\t", file1->full);
-		ft_printf("%s\n", temp->name);
-//		ft_printf("%s\t", file1->path);
-//		ft_printf("%s", ctime(&(file1->stat).st_mtime));
+		ft_printf("%s", temp->name);
+		if ((S_ISDIR(temp->stat.st_mode) && flags->slashdir == 1))
+			write(1, "/\n", 2);
+		else
+			write(1, "\n", 1);
 		temp = temp->next;
 	}
 }
@@ -34,7 +34,7 @@ void		print_list(t_ls *ls, t_file *file, t_flags *flags)
 
 	length = count_list_length(ls->objs);
 	if (!flags->longform)
-		display(ls, file);
+		display(ls, file, flags);
 	else if (flags->longform == 1)
-		display_long(ls, file);
+		display_long(ls, file, flags);
 }

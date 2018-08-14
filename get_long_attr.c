@@ -75,7 +75,7 @@ char		define_type(t_file *file)
 	return ('-');
 }
 
-void		get_owner(t_pstat *pstat, t_file *file)
+void		get_owner(t_pstat *pstat, t_file *file, t_flags *flags)
 {
 	int				usr_len;
 	int				grp_len;
@@ -85,10 +85,12 @@ void		get_owner(t_pstat *pstat, t_file *file)
 	group = NULL;
 	passwd = NULL;
 	passwd = getpwuid(file->stat.st_uid);
-	if (passwd)
-		file->user = ft_strdup(passwd->pw_name);
+	if (passwd && flags->noowner == 0)
+		file->user = ft_strjoin(passwd->pw_name, "  ");
+	else if (flags->noowner == 0)
+		file->user = ft_strjoin(ft_itoa(file->stat.st_uid), "  ");
 	else
-		file->user = ft_strdup(ft_itoa(file->stat.st_uid));
+		file->user = ft_strdup("");
 	usr_len = ft_strlen(file->user);
 	usr_len > pstat->maxusr ? pstat->maxusr = usr_len : 0;
 	group = getgrgid(file->stat.st_gid);

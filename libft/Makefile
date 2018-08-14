@@ -103,6 +103,7 @@ SOURCES =	ft_atoi.c\
 			ft_sort_strtab.c\
 			ft_intlen.c\
 			ft_clean_str_array.c\
+			ft_strcmp_nocase.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

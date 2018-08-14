@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void		parse_list(t_pstat *pstat, t_file *file)
+void		parse_list(t_pstat *pstat, t_file *file, t_flags *flags)
 {
 	t_file			*temp;
 	int				lnk_len;
@@ -28,7 +28,7 @@ void		parse_list(t_pstat *pstat, t_file *file)
 		size_len > pstat->maxsize ? pstat->maxsize = size_len : 0;
 		temp->type = define_type(temp);
 		define_chmod(temp);
-		get_owner(pstat, temp);
+		get_owner(pstat, temp, flags);
 		temp = temp->next;
 	}
 }
@@ -45,7 +45,7 @@ void		print_time(t_file *temp)
 		ft_printf("%.7s 10000", ctime(&temp->ftime) + 4);
 }
 
-void		display_long(t_ls *ls, t_file *file)
+void		display_long(t_ls *ls, t_file *file, t_flags *flags)
 {
 	t_file			*temp;
 	t_pstat			*pstat;
@@ -53,16 +53,17 @@ void		display_long(t_ls *ls, t_file *file)
 	temp = file;
 	pstat = (t_pstat*)malloc(sizeof(t_pstat));
 	init_pstat(pstat);
-	parse_list(pstat, file);
+	parse_list(pstat, file, flags);
 	(file != ls->files && file) ? ft_printf("total %d\n", pstat->total) : 0;
 	while (temp && ls)
 	{
-		ft_printf("%c%s %*d %-*s  %-*s  %*d ",
+		ft_printf("%c%s %*d %-*s%-*s  %*d ",
 		temp->type, temp->chmod, pstat->maxlnk, temp->stat.st_nlink,
 		pstat->maxusr, temp->user, pstat->maxgrp, temp->group,
 		pstat->maxsize, temp->stat.st_size);
 		print_time(temp);
 		ft_printf(" %s", temp->name);
+		(temp->type == 'd' && flags->slashdir == 1) ? write(1, "/", 1) : 0;
 		if (temp->type == 'l' && temp->target)
 			ft_printf(" -> %s", temp->target);
 		write(1, "\n", 1);

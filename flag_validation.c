@@ -19,8 +19,8 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 		if (!ft_strchr(FLAGS, arg[i]))
 			wrong_arg(flags, ls, arg[i]);
 		arg[i] == 'A' ? flags->noparent = 1 : 0;
-		arg[i] == 'l' ? flags->longform = 1 : 0;
-		arg[i] == 'a' ? flags->dotfiles = 1 : 0;
+		(arg[i] == 'l' || arg[i] == 'g') ? flags->longform = 1 : 0;
+		(arg[i] == 'a' || arg[i] == 'f') ? flags->dotfiles = 1 : 0;
 		arg[i] == 'r' ? flags->revsort = 1 : 0;
 		arg[i] == 'R' ? flags->recursive = 1 : 0;
 		arg[i] == 'S' ? flags->sizesort = 1 : 0;
@@ -30,6 +30,9 @@ static void	parse_flags(t_flags *flags, t_ls *ls, char *arg, int i)
 		arg[i] == 'U' ? flags->time_type = 'U' : 0;
 		arg[i] == 'u' ? flags->time_type = 'u' : 0;
 		arg[i] == '1' ? flags->longform = 0 : 0;
+		arg[i] == 'p' ? flags->slashdir = 1 : 0;
+		arg[i] == 'g' ? flags->noowner = 1 : 0;
+		arg[i] == 'f' ? flags->nosort = 1 : 0;
 	}
 }
 

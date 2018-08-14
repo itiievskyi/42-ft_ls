@@ -24,7 +24,7 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
-# define FLAGS "1ARSUacdlrtu"
+# define FLAGS "1ARSUacdfglprtu"
 
 typedef struct		s_file
 {
@@ -53,6 +53,9 @@ typedef struct		s_flags
 	int				timesort;
 	int				listdirs;
 	int				noparent;
+	int				slashdir;
+	int				noowner;
+	int				nosort;
 	char			time_type;
 }					t_flags;
 
@@ -88,8 +91,8 @@ void				ft_str_swap(char **a, char **b);
 void				ft_stat_swap(struct stat *a, struct stat *b);
 void				ft_time_swap(time_t *a, time_t *b);
 void				print_list(t_ls *ls, t_file *file, t_flags *flags);
-void				display(t_ls *ls, t_file *file);
-void				display_long(t_ls *ls, t_file *file);
+void				display(t_ls *ls, t_file *file, t_flags *flags);
+void				display_long(t_ls *ls, t_file *file, t_flags *flags);
 int					count_list_length(t_file *file);
 void				print_errors(t_ls *ls);
 void				print_cat_error(char *cat, char *error);
@@ -99,9 +102,10 @@ void				recursion(t_ls *ls, t_flags *flags);
 void				init_pstat(t_pstat *pstat);
 void				define_chmod(t_file *file);
 char				define_type(t_file *file);
-void				get_owner(t_pstat *pstat, t_file *file);
+void				get_owner(t_pstat *pstat, t_file *file, t_flags *flags);
 void				init_t_file(t_file *file);
 void				get_d_list(char *arg, t_flags *flags, t_ls *ls);
 void				define_time(t_flags *flags, t_file *file);
 void				size_sort(t_file *file);
+void				insensitive_sort(t_file *file);
 #endif

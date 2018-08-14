@@ -28,3 +28,20 @@ void		size_sort(t_file *file)
 			temp = temp->next;
 	}
 }
+
+void		insensitive_sort(t_file *file)
+{
+	t_file	*temp;
+
+	temp = file;
+	while (temp && temp->next)
+	{
+		if (ft_strcmp_nocase(temp->name, temp->next->name) > 0)
+		{
+			swap_t_file(temp, temp->next);
+			temp = file;
+		}
+		else
+			temp = temp->next;
+	}
+}

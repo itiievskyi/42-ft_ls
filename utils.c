@@ -22,7 +22,10 @@ void		init_struct(t_flags *flags, t_ls *ls)
 	flags->timesort = 0;
 	flags->listdirs = 0;
 	flags->noparent = 0;
+	flags->noowner = 0;
+	flags->nosort = 0;
 	flags->time_type = '\0';
+	flags->slashdir = 0;
 	ls->objs = NULL;
 	ls->files = NULL;
 	ls->err = NULL;

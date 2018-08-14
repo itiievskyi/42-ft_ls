@@ -85,11 +85,16 @@ void		alpha_sort(t_file *file)
 
 void		sort_list(t_file *file, t_flags *flags)
 {
-	alpha_sort(file);
-	if (flags->timesort == 1 && flags->sizesort == 0)
-		time_sort(file);
-	if (flags->sizesort == 1)
-		size_sort(file);
-	if (flags->revsort == 1)
-		rev_sort(file, -1, 0);
+	if (flags->nosort == 0)
+	{
+		alpha_sort(file);
+		if (flags->timesort == 1 && flags->sizesort == 0)
+			time_sort(file);
+		if (flags->sizesort == 1)
+			size_sort(file);
+		if (flags->revsort == 1)
+			rev_sort(file, -1, 0);
+	}
+	else
+		insensitive_sort(file);
 }
