@@ -18,6 +18,7 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 	t_file			*file;
 	t_file			*dirs;
 	t_file			*temp;
+	DIR				*test;
 
 	file = NULL;
 	dirs = NULL;
@@ -27,11 +28,13 @@ t_file		*create_list(t_flags *flags, t_ls *ls, DIR *dir, char *cat)
 		(sd->d_name[0] == '.' && flags->noparent && !ft_strequ(sd->d_name, ".")
 		&& !ft_strequ(sd->d_name, "..")))
 		{
-			if ((opendir(sd->d_name)) == NULL &&
+			if ((test = opendir(sd->d_name)) == NULL &&
 			ft_strequ(strerror(errno), "Not a directory"))
 				t_file_pushback(&file, sd->d_name, cat, flags);
 			else
 				t_file_pushback(&dirs, sd->d_name, cat, flags);
+			if (test)
+				closedir(test);
 		}
 	}
 	temp = file;
@@ -115,6 +118,7 @@ void		read_objs(t_flags *flags, t_ls *ls)
 					free(new);
 			}
 			closedir(dir);
+			clean_filelist(file);
 		}
 		if (temp->next)
 			write(1, "\n", 1);

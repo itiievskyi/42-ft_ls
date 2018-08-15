@@ -39,6 +39,7 @@ SOURCES =	main.c \
 			flag_d.c \
 			flags_time.c \
 			additional_sort.c \
+			clean.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

@@ -22,6 +22,5 @@ void		wrong_arg(t_flags *flags, t_ls *ls, char ch)
 	ft_putstr_fd("] [file ...]\n", 2);
 	free(flags);
 	free(ls);
-//	system("leaks ft_ls > leaks.out");
 	exit(1);
 }

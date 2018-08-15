@@ -112,4 +112,8 @@ void				define_time(t_flags *flags, t_file *file);
 void				size_sort(t_file *file);
 void				insensitive_sort(t_file *file);
 void				pf_flags_display(t_file *temp, t_flags *flags);
+void				clean_ls(t_ls *ls);
+void				clean_filelist(t_file *file);
+void				clean_file(t_file *file);
+
 #endif
