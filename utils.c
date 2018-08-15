@@ -40,6 +40,7 @@ void		init_pstat(t_pstat *pstat)
 	pstat->maxusr = 0;
 	pstat->maxsize = 0;
 	pstat->maxlnk = 1;
+	pstat->special = 0;
 	pstat->total = 0;
 }
 

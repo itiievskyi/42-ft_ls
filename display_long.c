@@ -22,15 +22,17 @@ static void	parse_list(t_pstat *pstat, t_file *file, t_flags *flags)
 	while (temp)
 	{
 		pstat->total += (temp->stat).st_blocks;
+		temp->type = define_type(temp, pstat);
+		define_chmod(temp);
+		get_owner(pstat, temp, flags);
 		lnk_len = ft_intlen(temp->stat.st_nlink);
 		size_len = ft_intlen(temp->stat.st_size);
 		lnk_len > pstat->maxlnk ? pstat->maxlnk = lnk_len : 0;
 		size_len > pstat->maxsize ? pstat->maxsize = size_len : 0;
-		temp->type = define_type(temp);
-		define_chmod(temp);
-		get_owner(pstat, temp, flags);
 		temp = temp->next;
 	}
+	if (pstat->special && pstat->maxsize < 8)
+		pstat->maxsize = 8;
 }
 
 static void	print_time(t_file *temp, t_flags *flags)
@@ -50,6 +52,28 @@ static void	print_time(t_file *temp, t_flags *flags)
 	}
 }
 
+static void	print_size(t_file *temp, t_pstat *pstat)
+{
+	if (!pstat->special)
+		ft_printf("%*d ", pstat->maxsize, temp->stat.st_size);
+	else
+	{
+		if (temp->type == 'c' || temp->type == 'b')
+		{
+			if (ft_intlen(major(temp->stat.st_rdev)) < 4)
+				ft_printf("% 3d,", major(temp->stat.st_rdev));
+			else
+				ft_printf(" %#010x,", major(temp->stat.st_rdev));
+			if (ft_intlen(minor(temp->stat.st_rdev)) < 4)
+				ft_printf("% 4d ", minor(temp->stat.st_rdev));
+			else
+				ft_printf(" %#010x ", minor(temp->stat.st_rdev));
+		}
+		else
+			ft_printf("%*d ", pstat->maxsize, temp->stat.st_size);
+	}
+}
+
 void		display_long(t_ls *ls, t_file *file, t_flags *flags)
 {
 	t_file			*temp;
@@ -62,10 +86,10 @@ void		display_long(t_ls *ls, t_file *file, t_flags *flags)
 	(file != ls->files && file) ? ft_printf("total %d\n", pstat->total) : 0;
 	while (temp && ls)
 	{
-		ft_printf("%c%s %*d %-*s%-*s%*d ",
+		ft_printf("%c%s %*d %-*s%-*s",
 		temp->type, temp->chmod, pstat->maxlnk, temp->stat.st_nlink,
-		pstat->maxusr, temp->user, pstat->maxgrp, temp->group,
-		pstat->maxsize, temp->stat.st_size);
+		pstat->maxusr, temp->user, pstat->maxgrp, temp->group);
+		print_size(temp, pstat);
 		print_time(temp, flags);
 		ft_printf(" %s", temp->name);
 		pf_flags_display(temp, flags);

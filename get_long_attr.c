@@ -53,19 +53,45 @@ void		define_chmod(t_file *file)
 	get_acl_last(file);
 }
 
-char		define_type(t_file *file)
+static void	get_new_link(t_file *file)
 {
-	if (S_ISDIR(file->stat.st_mode))
-		return ('d');
-	if (S_ISCHR(file->stat.st_mode))
-		return ('c');
-	if (S_ISBLK(file->stat.st_mode))
-		return ('b');
-	if (S_ISLNK(file->stat.st_mode))
+	char	*temp;
+
+	if (file->stat.st_size == 0)
+	{
+		temp = ft_strnew(1024);
+		file->stat.st_size = readlink(file->full, temp, 1024);
+		file->target = (char*)malloc(sizeof(char) * file->stat.st_size + 1);
+		readlink(file->full, file->target, file->stat.st_size + 1);
+		file->target[file->stat.st_size] = '\0';
+		file->stat.st_size = 0;
+		free(temp);
+	}
+	else
 	{
 		file->target = (char*)malloc(sizeof(char) * file->stat.st_size + 1);
 		readlink(file->full, file->target, file->stat.st_size + 1);
 		file->target[file->stat.st_size] = '\0';
+	}
+}
+
+char		define_type(t_file *file, t_pstat *pstat)
+{
+	if (S_ISDIR(file->stat.st_mode))
+		return ('d');
+	if (S_ISCHR(file->stat.st_mode))
+	{
+		pstat->special = 1;
+		return ('c');
+	}
+	if (S_ISBLK(file->stat.st_mode))
+	{
+		pstat->special = 1;
+		return ('b');
+	}
+	if (S_ISLNK(file->stat.st_mode))
+	{
+		get_new_link(file);
 		return ('l');
 	}
 	if (S_ISSOCK(file->stat.st_mode))

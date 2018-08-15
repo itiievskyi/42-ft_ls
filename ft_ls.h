@@ -76,6 +76,7 @@ typedef struct		s_pstat
 	int				maxgrp;
 	int				maxlnk;
 	int				maxsize;
+	int				special;
 	int				total;
 }					t_pstat;
 
@@ -103,7 +104,7 @@ void				rev_sort(t_file *file, int i, int j);
 void				recursion(t_ls *ls, t_flags *flags);
 void				init_pstat(t_pstat *pstat);
 void				define_chmod(t_file *file);
-char				define_type(t_file *file);
+char				define_type(t_file *file, t_pstat *pstat);
 void				get_owner(t_pstat *pstat, t_file *file, t_flags *flags);
 void				init_t_file(t_file *file);
 void				get_d_list(char *arg, t_flags *flags, t_ls *ls);
