@@ -107,13 +107,14 @@ void				define_chmod(t_file *file);
 char				define_type(t_file *file, t_pstat *pstat);
 void				get_owner(t_pstat *pstat, t_file *file, t_flags *flags);
 void				init_t_file(t_file *file);
-void				get_d_list(char *arg, t_flags *flags, t_ls *ls);
+void				get_d_list(char *arg, t_flags *flags, t_ls *ls, char *buf);
 void				define_time(t_flags *flags, t_file *file);
 void				size_sort(t_file *file);
 void				insensitive_sort(t_file *file);
 void				pf_flags_display(t_file *temp, t_flags *flags);
 void				clean_ls(t_ls *ls);
-void				clean_filelist(t_file *file);
-void				clean_file(t_file *file);
-
+int					clean_filelist(t_file *file);
+void				init_t_ls(t_ls *ls);
+t_file				*handle_sd(t_flags *flags, t_ls *ls, t_file *file,
+					t_file *dirs);
 #endif

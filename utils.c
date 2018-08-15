@@ -44,6 +44,14 @@ void		init_pstat(t_pstat *pstat)
 	pstat->total = 0;
 }
 
+void		init_t_ls(t_ls *ls)
+{
+	ls->objs = NULL;
+	ls->files = NULL;
+	ls->err = NULL;
+	ls->path = NULL;
+}
+
 void		init_t_file(t_file *file)
 {
 	file->user = NULL;

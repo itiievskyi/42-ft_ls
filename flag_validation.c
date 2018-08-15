@@ -67,7 +67,8 @@ static void	get_list(char *arg, t_flags *flags, t_ls *ls, char *buf)
 
 	error = NULL;
 	arg ? readlink(arg, buf, 1024) : 0;
-	(dir = opendir(arg)) == NULL ? error = ft_strdup(strerror(errno)) : 0;
+	dir = opendir(arg);
+	dir == NULL ? error = ft_strdup(strerror(errno)) : 0;
 	if (ft_strlen(buf) > 0 && flags->longform == 1)
 		t_file_pushback(&(ls->files), arg, ls->path, flags);
 	else if (ft_strlen(buf) > 0 && dir == NULL &&
@@ -79,7 +80,7 @@ static void	get_list(char *arg, t_flags *flags, t_ls *ls, char *buf)
 		t_file_pushback(&(ls->files), arg, ls->path, flags);
 	else if (arg && dir == NULL &&
 	ft_strequ(error, "No such file or directory"))
-		t_file_pushback(&(ls->err), arg, strerror(errno), flags);
+		t_file_pushback(&(ls->err), arg, error, flags);
 	else if (arg)
 		t_file_pushback(&(ls->objs), arg, ls->path, flags);
 	error == NULL ? 0 : free(error);
@@ -89,7 +90,7 @@ static void	get_list(char *arg, t_flags *flags, t_ls *ls, char *buf)
 void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 {
 	int		arg;
-	char 	*buf;
+	char	*buf;
 
 	arg = 0;
 	ls->path = ft_strdup("");
@@ -106,7 +107,7 @@ void		check_args(int argc, char **argv, t_flags *flags, t_ls *ls)
 			ft_strequ(argv[arg], "--"))
 				arg++;
 			if (flags->listdirs == 1)
-				get_d_list(argv[arg], flags, ls);
+				get_d_list(argv[arg], flags, ls, buf);
 			else
 				get_list(argv[arg], flags, ls, buf);
 			free(buf);

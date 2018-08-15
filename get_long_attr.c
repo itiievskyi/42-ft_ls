@@ -27,12 +27,12 @@ static void	get_acl_last(t_file *file)
 	else
 		file->chmod[9] = ' ';
 	if (acl)
-		free (acl);
+		free(acl);
 }
 
 void		define_chmod(t_file *file)
 {
-	mode_t 		val;
+	mode_t		val;
 
 	val = (file->stat.st_mode & ~S_IFMT);
 	file->chmod[0] = ((val & S_IRUSR) ? 'r' : '-');
@@ -57,6 +57,7 @@ static void	get_new_link(t_file *file)
 {
 	char	*temp;
 
+	temp = NULL;
 	if (file->stat.st_size == 0)
 	{
 		temp = ft_strnew(1024);

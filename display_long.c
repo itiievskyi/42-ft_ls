@@ -98,4 +98,5 @@ void		display_long(t_ls *ls, t_file *file, t_flags *flags)
 		write(1, "\n", 1);
 		temp = temp->next;
 	}
+	free(pstat);
 }

@@ -32,8 +32,7 @@ void		ft_printf_string(t_params *par, va_list arg, int *ret, int a)
 		(par->data)[par->prec] = '\0';
 	if (par->error == 0 && (a = par->width - (int)ft_strlen(par->data)) > 0)
 	{
-		if (par->minus)
-			ft_write_string(par->data, 0, ret);
+		par->minus ? ft_write_string(par->data, 0, ret) : 0;
 		while (a--)
 		{
 			if (par->zero)
@@ -41,8 +40,8 @@ void		ft_printf_string(t_params *par, va_list arg, int *ret, int a)
 			else
 				ft_write(" ", ret, 1);
 		}
-		if (!(par->minus))
-			ft_write_string(par->data, 0, ret);
+		(!(par->minus)) ? ft_write_string(par->data, 0, ret) : 0;
+		free(par->data);
 	}
 	else if (par->error == 0)
 		ft_write_free_string(par, 0, ret);

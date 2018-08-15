@@ -1,13 +1,13 @@
-Process:         ft_ls [57285]
+Process:         ft_ls [99876]
 Path:            /Users/itiievsk/work/ft_ls/ft_ls
-Load Address:    0x109c90000
+Load Address:    0x10d8c2000
 Identifier:      ft_ls
 Version:         ???
 Code Type:       X86-64
-Parent Process:  zsh [9671]
+Parent Process:  zsh [99808]
 
-Date/Time:       2018-08-15 13:49:45.732 +0300
-Launch Time:     2018-08-15 13:49:45.475 +0300
+Date/Time:       2018-08-15 16:29:13.029 +0300
+Launch Time:     2018-08-15 16:29:12.440 +0300
 OS Version:      Mac OS X 10.13.3 (17D47)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
@@ -15,5 +15,5 @@ Analysis Tool Version:  Xcode 9.2 (9C40b)
 ----
 
 leaks Report Version:  2.0
-Process 57285: 155 nodes malloced for 13 KB
-Process 57285: 0 leaks for 0 total leaked bytes.
+Process 99876: 152 nodes malloced for 13 KB
+Process 99876: 0 leaks for 0 total leaked bytes.

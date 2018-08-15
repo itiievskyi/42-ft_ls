@@ -14,7 +14,7 @@
 
 void		pf_flags_display(t_file *temp, t_flags *flags)
 {
-	mode_t 		val;
+	mode_t	val;
 
 	val = (temp->stat.st_mode & ~S_IFMT);
 	if ((S_ISDIR(temp->stat.st_mode) && flags->filetypes > 0))
@@ -34,7 +34,7 @@ void		pf_flags_display(t_file *temp, t_flags *flags)
 
 void		display(t_ls *ls, t_file *file, t_flags *flags)
 {
-	t_file			*temp;
+	t_file	*temp;
 
 	temp = file;
 	while (temp && ls)
@@ -48,7 +48,7 @@ void		display(t_ls *ls, t_file *file, t_flags *flags)
 
 void		print_list(t_ls *ls, t_file *file, t_flags *flags)
 {
-	int				length;
+	int		length;
 
 	length = count_list_length(ls->objs);
 	if (!flags->longform)

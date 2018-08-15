@@ -12,32 +12,22 @@
 
 #include "ft_ls.h"
 
-void		clean_file(t_file *file)
+int			clean_filelist(t_file *file)
 {
-	free(file);
-}
+	t_file		*temp;
 
-void		clean_filelist(t_file *file)
-{
-	while (file)
+	while ((temp = file))
 	{
-		file->name != NULL ? free(file->name) : 0;
-		file->path != NULL ? free(file->path) : 0;
-		file->full != NULL ? free(file->full) : 0;
-		file->user != NULL ? free(file->user) : 0;
-		file->group != NULL ? free(file->group) : 0;
-		file->target != NULL ? free(file->target) : 0;
-		if (file->next)
-		{
-			file = file->next;
-			free(file->prev);
-		}
-		else
-		{
-			free(file);
-			file = NULL;
-		}
+		file = file->next;
+		temp->name != NULL ? free(temp->name) : 0;
+		temp->path != NULL ? free(temp->path) : 0;
+		temp->full != NULL ? free(temp->full) : 0;
+		temp->user != NULL ? free(temp->user) : 0;
+		temp->group != NULL ? free(temp->group) : 0;
+		temp->target != NULL ? free(temp->target) : 0;
+		free(temp);
 	}
+	return (1);
 }
 
 void		clean_ls(t_ls *ls)

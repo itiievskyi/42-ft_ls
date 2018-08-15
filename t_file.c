@@ -51,7 +51,7 @@ t_file	*t_file_new(char *name, char *cat, t_flags *flags)
 	return (file);
 }
 
-int		t_file_pushback(t_file **begin, char *name, char *cat, t_flags* flags)
+int		t_file_pushback(t_file **begin, char *name, char *cat, t_flags *flags)
 {
 	t_file *temp;
 
