@@ -35,13 +35,13 @@ void		frontbacksplit(t_file *source, t_file **frontref, t_file **backref)
 
 void		sort_size_list(t_file **file)
 {
-	t_file 	*head;
+	t_file	*head;
 	t_file	*a;
 	t_file	*b;
 
 	head = *file;
 	if ((head == NULL) || (head->next == NULL))
-		return;
+		return ;
 	frontbacksplit(head, &a, &b);
 	sort_size_list(&a);
 	sort_size_list(&b);
@@ -50,13 +50,13 @@ void		sort_size_list(t_file **file)
 
 void		sort_time_list(t_file **file)
 {
-	t_file 	*head;
+	t_file	*head;
 	t_file	*a;
 	t_file	*b;
 
 	head = *file;
 	if ((head == NULL) || (head->next == NULL))
-		return;
+		return ;
 	frontbacksplit(head, &a, &b);
 	sort_time_list(&a);
 	sort_time_list(&b);
@@ -65,13 +65,13 @@ void		sort_time_list(t_file **file)
 
 void		sort_alpha_list(t_file **file)
 {
-	t_file 	*head;
+	t_file	*head;
 	t_file	*a;
 	t_file	*b;
 
 	head = *file;
 	if ((head == NULL) || (head->next == NULL))
-		return;
+		return ;
 	frontbacksplit(head, &a, &b);
 	sort_alpha_list(&a);
 	sort_alpha_list(&b);
@@ -98,7 +98,7 @@ void		sort_list(t_file **file, t_flags *flags)
 	else
 	{
 		if ((head == NULL) || (head->next == NULL))
-			return;
+			return ;
 		frontbacksplit(head, &a, &b);
 		sort_list(&a, flags);
 		sort_list(&b, flags);

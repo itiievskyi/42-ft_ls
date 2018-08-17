@@ -38,7 +38,7 @@ t_file	*t_file_new(char *name, char *cat, t_flags *flags)
 	file->path = ft_strdup(cat);
 	if ((cat && cat[0] != '\0'))
 	{
-		temp = ft_strjoin(cat, "/");
+		temp = (!ft_strequ("/", cat) ? ft_strjoin(cat, "/") : ft_strdup("/"));
 		file->full = ft_strjoin(temp, name);
 		free(temp);
 	}

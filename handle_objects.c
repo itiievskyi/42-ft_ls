@@ -119,8 +119,8 @@ void		read_objs(t_flags *flags, t_ls *ls)
 
 	dir = NULL;
 	temp = NULL;
-	temp = ls->objs;
 	sort_list(&ls->objs, flags);
+	temp = ls->objs;
 	while (temp)
 	{
 		process_dir(temp, ls, flags, dir);

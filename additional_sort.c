@@ -50,7 +50,7 @@ t_file		*sorted_alpha_merge(t_file *a, t_file *b)
 		result = b;
 		result->next = sorted_alpha_merge(a, b->next);
 	}
-	return(result);
+	return (result);
 }
 
 t_file		*sorted_size_merge(t_file *a, t_file *b)
@@ -72,7 +72,7 @@ t_file		*sorted_size_merge(t_file *a, t_file *b)
 		result = b;
 		result->next = sorted_size_merge(a, b->next);
 	}
-	return(result);
+	return (result);
 }
 
 t_file		*sorted_time_merge(t_file *a, t_file *b)
@@ -99,7 +99,7 @@ t_file		*sorted_time_merge(t_file *a, t_file *b)
 		result = b;
 		result->next = sorted_time_merge(a, b->next);
 	}
-	return(result);
+	return (result);
 }
 
 t_file		*sorted_system_merge(t_file *a, t_file *b)
@@ -121,5 +121,5 @@ t_file		*sorted_system_merge(t_file *a, t_file *b)
 		result = b;
 		result->next = sorted_system_merge(a, b->next);
 	}
-	return(result);
+	return (result);
 }

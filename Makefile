@@ -26,7 +26,6 @@ LIB = libft/libft.a
 
 SOURCES =	main.c \
 			flag_validation.c \
-			quit.c \
 			utils.c \
 			handle_objects.c \
 			display.c \
