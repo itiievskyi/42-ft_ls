@@ -26,7 +26,7 @@ t_file		*handle_sd(t_flags *flags, t_ls *ls, t_file *file, t_file *dirs)
 	else
 		file = dirs;
 	if (file && count_list_length(file) > 1 && ls)
-		sort_list(file, flags);
+		sort_list(&file, flags);
 	return (file);
 }
 
@@ -120,7 +120,7 @@ void		read_objs(t_flags *flags, t_ls *ls)
 	dir = NULL;
 	temp = NULL;
 	temp = ls->objs;
-	sort_list(ls->objs, flags);
+	sort_list(&ls->objs, flags);
 	while (temp)
 	{
 		process_dir(temp, ls, flags, dir);

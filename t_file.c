@@ -29,8 +29,9 @@ int		count_list_length(t_file *file)
 
 t_file	*t_file_new(char *name, char *cat, t_flags *flags)
 {
-	t_file	*file;
-	char	*temp;
+	t_file			*file;
+	char			*temp;
+	static ssize_t	num = 0;
 
 	file = (t_file*)malloc(sizeof(t_file));
 	file->name = ft_strdup(name);
@@ -48,6 +49,8 @@ t_file	*t_file_new(char *name, char *cat, t_flags *flags)
 	lstat(file->full, &file->stat);
 	init_t_file(file);
 	define_time(flags, file);
+	file->sysnum = num;
+	num++;
 	return (file);
 }
 

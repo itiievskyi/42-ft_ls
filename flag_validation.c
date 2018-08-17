@@ -52,7 +52,7 @@ static void	finish_parsing(t_ls *ls, t_flags *flags)
 	}
 	if (ls->files)
 	{
-		sort_list(ls->files, flags);
+		sort_list(&ls->files, flags);
 		print_list(ls, ls->files, flags);
 		if (ls->objs)
 			write(1, "\n", 1);

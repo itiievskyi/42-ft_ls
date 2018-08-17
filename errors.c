@@ -17,7 +17,7 @@ void		print_errors(t_ls *ls)
 	t_file	*temp;
 
 	temp = ls->err;
-	alpha_sort(temp);
+	sort_alpha_list(&temp);
 	if (temp)
 	{
 		while (temp)

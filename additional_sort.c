@@ -12,36 +12,114 @@
 
 #include "ft_ls.h"
 
-void		size_sort(t_file *file)
+void		rev_sort(t_file **file)
 {
-	t_file	*temp;
+	t_file *prev;
+	t_file *current;
+	t_file *next;
 
-	temp = file;
-	while (temp && temp->next)
+	prev = NULL;
+	current = *file;
+	next = NULL;
+	while (current != NULL)
 	{
-		if (temp->stat.st_size < temp->next->stat.st_size)
-		{
-			swap_t_file(temp, temp->next);
-			temp = file;
-		}
-		else
-			temp = temp->next;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
+	*file = prev;
 }
 
-void		insensitive_sort(t_file *file)
+t_file		*sorted_alpha_merge(t_file *a, t_file *b)
 {
-	t_file	*temp;
+	t_file *result;
 
-	temp = file;
-	while (temp && temp->next)
+	result = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (ft_strcmp(a->name, b->name) < 0)
 	{
-		if (ft_strcmp_nocase(temp->name, temp->next->name) > 0)
-		{
-			swap_t_file(temp, temp->next);
-			temp = file;
-		}
-		else
-			temp = temp->next;
+		result = a;
+		result->next = sorted_alpha_merge(a->next, b);
 	}
+	else
+	{
+		result = b;
+		result->next = sorted_alpha_merge(a, b->next);
+	}
+	return(result);
+}
+
+t_file		*sorted_size_merge(t_file *a, t_file *b)
+{
+	t_file *result;
+
+	result = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (a->stat.st_size >= b->stat.st_size)
+	{
+		result = a;
+		result->next = sorted_size_merge(a->next, b);
+	}
+	else
+	{
+		result = b;
+		result->next = sorted_size_merge(a, b->next);
+	}
+	return(result);
+}
+
+t_file		*sorted_time_merge(t_file *a, t_file *b)
+{
+	t_file *result;
+
+	result = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (a->ftime > b->ftime)
+	{
+		result = a;
+		result->next = sorted_time_merge(a->next, b);
+	}
+	else if (a->ftime == b->ftime && a->nsec >= b->nsec)
+	{
+		result = a;
+		result->next = sorted_time_merge(a->next, b);
+	}
+	else
+	{
+		result = b;
+		result->next = sorted_time_merge(a, b->next);
+	}
+	return(result);
+}
+
+t_file		*sorted_system_merge(t_file *a, t_file *b)
+{
+	t_file *result;
+
+	result = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (a->sysnum <= b->sysnum)
+	{
+		result = a;
+		result->next = sorted_system_merge(a->next, b);
+	}
+	else
+	{
+		result = b;
+		result->next = sorted_system_merge(a, b->next);
+	}
+	return(result);
 }

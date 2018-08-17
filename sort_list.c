@@ -12,89 +12,96 @@
 
 #include "ft_ls.h"
 
-void		swap_t_file(t_file *one, t_file *two)
+void		frontbacksplit(t_file *source, t_file **frontref, t_file **backref)
 {
-	ft_str_swap(&(one->name), &(two->name));
-	ft_str_swap(&(one->path), &(two->path));
-	ft_str_swap(&(one->full), &(two->full));
-	ft_stat_swap(&(one->stat), &(two->stat));
-	ft_time_swap(&(one->nsec), &(two->nsec));
-	ft_time_swap(&(one->ftime), &(two->ftime));
+	t_file *fast;
+	t_file *slow;
+
+	slow = source;
+	fast = source->next;
+	while (fast != NULL)
+	{
+		fast = fast->next;
+		if (fast != NULL)
+		{
+			slow = slow->next;
+			fast = fast->next;
+		}
+	}
+	*frontref = source;
+	*backref = slow->next;
+	slow->next = NULL;
 }
 
-void		rev_sort(t_file *file, int i, int j)
+void		sort_size_list(t_file **file)
 {
+	t_file 	*head;
 	t_file	*a;
 	t_file	*b;
-	int		len;
 
-	len = count_list_length(file);
-	while (++i < len / 2)
-	{
-		j = 0;
-		a = file;
-		b = file;
-		while (j++ < i)
-			a = a->next;
-		j = 0;
-		while (j++ < len - i - 1)
-			b = b->next;
-		swap_t_file(a, b);
-	}
+	head = *file;
+	if ((head == NULL) || (head->next == NULL))
+		return;
+	frontbacksplit(head, &a, &b);
+	sort_size_list(&a);
+	sort_size_list(&b);
+	*file = sorted_size_merge(a, b);
 }
 
-void		time_sort(t_file *file)
+void		sort_time_list(t_file **file)
 {
-	t_file	*temp;
+	t_file 	*head;
+	t_file	*a;
+	t_file	*b;
 
-	temp = file;
-	while (temp && temp->next)
-	{
-		if (temp->ftime < temp->next->ftime)
-		{
-			swap_t_file(temp, temp->next);
-			temp = file;
-		}
-		else if ((temp->ftime == temp->next->ftime) &&
-		(temp->nsec < temp->next->nsec))
-		{
-			swap_t_file(temp, temp->next);
-			temp = file;
-		}
-		else
-			temp = temp->next;
-	}
+	head = *file;
+	if ((head == NULL) || (head->next == NULL))
+		return;
+	frontbacksplit(head, &a, &b);
+	sort_time_list(&a);
+	sort_time_list(&b);
+	*file = sorted_time_merge(a, b);
 }
 
-void		alpha_sort(t_file *file)
+void		sort_alpha_list(t_file **file)
 {
-	t_file	*temp;
+	t_file 	*head;
+	t_file	*a;
+	t_file	*b;
 
-	temp = file;
-	while (temp && temp->next)
-	{
-		if (ft_strcmp(temp->name, temp->next->name) > 0)
-		{
-			swap_t_file(temp, temp->next);
-			temp = file;
-		}
-		else
-			temp = temp->next;
-	}
+	head = *file;
+	if ((head == NULL) || (head->next == NULL))
+		return;
+	frontbacksplit(head, &a, &b);
+	sort_alpha_list(&a);
+	sort_alpha_list(&b);
+	*file = sorted_alpha_merge(a, b);
 }
 
-void		sort_list(t_file *file, t_flags *flags)
+void		sort_list(t_file **file, t_flags *flags)
 {
+	t_file	*head;
+	t_file	*a;
+	t_file	*b;
+
+	head = *file;
 	if (flags->nosort == 0)
 	{
-		alpha_sort(file);
+		sort_alpha_list(file);
 		if (flags->timesort == 1 && flags->sizesort == 0)
-			time_sort(file);
+			sort_time_list(file);
 		if (flags->sizesort == 1)
-			size_sort(file);
+			sort_size_list(file);
 		if (flags->revsort == 1)
-			rev_sort(file, -1, 0);
+			rev_sort(file);
 	}
 	else
-		insensitive_sort(file);
+	{
+		if ((head == NULL) || (head->next == NULL))
+			return;
+		frontbacksplit(head, &a, &b);
+		sort_list(&a, flags);
+		sort_list(&b, flags);
+		*file = sorted_system_merge(a, b);
+	}
 }

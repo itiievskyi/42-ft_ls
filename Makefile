@@ -34,7 +34,6 @@ SOURCES =	main.c \
 			get_long_attr.c \
 			t_file.c \
 			sort_list.c \
-			swaps.c \
 			errors.c \
 			flag_d.c \
 			flags_time.c \
